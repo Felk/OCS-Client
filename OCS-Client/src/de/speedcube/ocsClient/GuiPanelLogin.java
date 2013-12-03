@@ -1,7 +1,6 @@
 package de.speedcube.ocsClient;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 

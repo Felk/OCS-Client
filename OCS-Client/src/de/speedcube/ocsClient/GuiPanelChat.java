@@ -3,6 +3,8 @@ package de.speedcube.ocsClient;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.JTextComponent;
 import javax.swing.text.html.HTMLEditorKit;
 
 import de.speedcube.ocsClient.network.Client;
@@ -13,6 +15,7 @@ public class GuiPanelChat extends GuiPanel {
 
 	private Client client;
 	public JEditorPane chatArea;
+	public JScrollPane chatScrollPane;
 	public JTextField chatField;
 	public JButton chatButton;
 	public OCSClient window;
@@ -33,6 +36,9 @@ public class GuiPanelChat extends GuiPanel {
 		HTMLEditorKit htmlKit = new HTMLEditorKit();
 		chatArea.setEditorKit(htmlKit);
 
+		chatScrollPane = new JScrollPane(chatArea);
+		chatScrollPane.setBounds(chatArea.getBounds());
+
 		chatField = new JTextField();
 		chatField.setBounds(0, 400, 300, 30);
 		chatField.addKeyListener(new ChatTextFieldListener(this));
@@ -44,10 +50,9 @@ public class GuiPanelChat extends GuiPanel {
 		ChatButtonListener chatButtonListener = new ChatButtonListener(this);
 		chatButton.addActionListener(chatButtonListener);
 
-		add(chatArea);
+		add(chatScrollPane);
 		add(chatField);
 		add(chatButton);
-		//setTextField();
 		chatArea.setText("<html>" + getTextAreaStyle() + "<body>willkommen im OCS 1.0</body></html>");
 		validate();
 	}
@@ -58,16 +63,19 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void setTextField() {
-		StringBuilder textBuffer = new StringBuilder();
-		textBuffer.append("<html>" + getTextAreaStyle());
+		synchronized (chatArea) {
+			StringBuilder textBuffer = new StringBuilder();
+			textBuffer.append("<html>" + getTextAreaStyle());
 
-		for (String s : chatMessages) {
-			textBuffer.append("<br>");
-			textBuffer.append(s);
+			for (String s : chatMessages) {
+				textBuffer.append("<br>");
+				textBuffer.append(s);
+			}
+			textBuffer.append("</html>");
+			chatArea.setText(textBuffer.toString());
+			JScrollBar vbar = chatScrollPane.getVerticalScrollBar();
+			((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
-		textBuffer.append("</html>");
-		chatArea.setText(textBuffer.toString());
-		System.out.println(chatArea.getText());
 	}
 
 	private String getTextAreaStyle() {

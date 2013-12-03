@@ -11,6 +11,8 @@ public class OCSClient extends JFrame {
 
 	public static final String version = "0";
 	public Client client;
+	public String username = "undefined";
+
 	public Object receiveNotify;
 	public GuiPanelChat chatPanel;
 	public GuiPanelLogin loginPanel;
@@ -38,12 +40,13 @@ public class OCSClient extends JFrame {
 			for (Packet p : packets) {
 				if (p instanceof PacketChatBroadcast) {
 					chatPanel.addChatMessage(((PacketChatBroadcast) p));
-				} else if (p instanceof PacketLoginSalt) {
-					PacketLoginPassword passwordPacket = new PacketLoginPassword();
+				} else if (p instanceof PacketSalt) {
+					PacketLogin passwordPacket = new PacketLogin();
 					passwordPacket.password = loginPanel.getPassword();
-					passwordPacket.salt = ((PacketLoginSalt) p).salt;
+					passwordPacket.salt = ((PacketSalt) p).salt;
 					client.sendPacket(passwordPacket);
-				} else if (p instanceof PacketLoginUsername) {
+				} else if (p instanceof PacketLoginSuccess) {
+					username = ((PacketLoginSuccess) p).username;
 					removeAllGuis();
 					add(chatPanel);
 					add(userlistPanel);
@@ -74,6 +77,7 @@ public class OCSClient extends JFrame {
 		timerPanel = new GuiPanelTimer(client, this);
 
 		add(loginPanel);
+		//add(timerPanel);
 		validate();
 	}
 

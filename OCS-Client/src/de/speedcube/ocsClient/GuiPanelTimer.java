@@ -1,16 +1,15 @@
 package de.speedcube.ocsClient;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import de.speedcube.ocsClient.network.Client;
 
 public class GuiPanelTimer extends GuiPanel {
 
 	public JLabel timerLabel;
+	public JButton timerStartButton;
+	
 
 	public GuiPanelTimer(Client client, OCSClient window) {
 		setLayout(null);
@@ -20,7 +19,14 @@ public class GuiPanelTimer extends GuiPanel {
 		timerLabel.setBounds(0, 0, 800, 200);
 		setText("00:00,00");
 
+		timerStartButton = new JButton();
+		timerStartButton.setText("Start");
+		timerStartButton.setBounds(0, 200, 200, 50);
+		TimerStartButtonListener timerStartButtonListener = new TimerStartButtonListener(client, this);
+		timerStartButton.addActionListener(timerStartButtonListener);
+
 		add(timerLabel);
+		add(timerStartButton);
 
 		validate();
 	}

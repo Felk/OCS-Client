@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import de.speedcube.ocsClient.network.Client;
-import de.speedcube.ocsUtilities.packets.PacketLoginUsername;
+import de.speedcube.ocsUtilities.packets.PacketLogin;
+import de.speedcube.ocsUtilities.packets.PacketSaltGet;
 
 public class LoginButtonListener implements ActionListener {
 
@@ -20,7 +21,7 @@ public class LoginButtonListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PacketLoginUsername userNamePacket = new PacketLoginUsername();
+		PacketSaltGet userNamePacket = new PacketSaltGet();
 		userNamePacket.username = usernameField.getText();
 		client.sendPacket(userNamePacket);
 	}

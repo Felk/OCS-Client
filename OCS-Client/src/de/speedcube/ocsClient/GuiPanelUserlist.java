@@ -2,7 +2,6 @@ package de.speedcube.ocsClient;
 
 import java.util.HashMap;
 
-import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import de.speedcube.ocsClient.network.Client;
