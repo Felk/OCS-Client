@@ -1,8 +1,12 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.*;
@@ -31,15 +35,20 @@ public class OCSClient extends JFrame {
 		boolean running = true;
 
 		while (running) {
-			synchronized (receiveNotify) {
-				try {
-					receiveNotify.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+			ArrayList<Packet> packets;
+			packets = client.getData(0);
 
-			ArrayList<Packet> packets = client.getData(0);
+			if (packets.size() == 0) {
+
+				synchronized (receiveNotify) {
+					try {
+						receiveNotify.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				packets = client.getData(0);
+			}
 
 			for (Packet p : packets) {
 				if (p instanceof PacketChatBroadcast) {
@@ -62,6 +71,8 @@ public class OCSClient extends JFrame {
 					loginPanel.setAlertText(((PacketLogout) p).msg);
 				} else if (p instanceof PacketUserInfo) {
 					userList.addUsers((PacketUserInfo) p);
+					userlistPanel.updateUserlist();
+					chatPanel.setTextField();
 				}
 			}
 		}
@@ -77,11 +88,14 @@ public class OCSClient extends JFrame {
 	public void addGui(GuiPanel gui) {
 		add(gui);
 		validate();
+		repaint();
 	}
 
 	public void setupWindow() {
 		setTitle("OCS");
+		setLayout(null);
 		setSize(800, 600);
+		getContentPane().setBackground(Color.decode("#444444"));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -92,8 +106,9 @@ public class OCSClient extends JFrame {
 		timerPanel = new GuiPanelTimer(client, this);
 
 		add(loginPanel);
-		//add(timerPanel);
+
 		validate();
+		repaint();
 	}
 
 	public static void main(String[] args) {

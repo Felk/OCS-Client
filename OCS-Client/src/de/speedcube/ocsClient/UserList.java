@@ -25,7 +25,10 @@ public class UserList {
 	}
 
 	public String getUserNameByID(int id) {
-		return usersMap.get(id).username;
+		if (usersMap.get(id) != null) {
+			return usersMap.get(id).username;
+		} else return "null";
+
 	}
 
 	public UserInfo getUserInfoByID(int id) {

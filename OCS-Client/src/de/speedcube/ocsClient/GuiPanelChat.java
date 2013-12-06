@@ -1,5 +1,6 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -27,7 +28,8 @@ public class GuiPanelChat extends GuiPanel {
 		chatMessages = new ArrayList<String>();
 
 		setLayout(null);
-		setBounds(0, 0, 500, window.getHeight());
+
+		setBounds(0, 0, 400, 430);
 
 		chatArea = new JEditorPane();
 		chatArea.setBounds(0, 0, 400, 400);

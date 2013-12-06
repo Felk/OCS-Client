@@ -1,5 +1,6 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
@@ -26,7 +27,7 @@ public class GuiPanelLogin extends GuiPanel {
 	public GuiPanelLogin(Client client, OCSClient window) {
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
-		//setBounds(0, 0, window.getWidth(), window.getHeight());
+		setBounds(0, 0, window.getWidth(), window.getHeight());
 
 		alertLabel = new JLabel();
 		alertLabel.setText("");
