@@ -27,15 +27,17 @@ public class GuiPanelUserlist extends GuiPanel {
 	}
 
 	public void updateUserlist(PacketUserlist userlistPacket) {
+
 		userlist.setText("");
-		for (String username : userlistPacket.usernames) {
-			userlist.append(username + "\n");
+		for (int i = 0; i < userlistPacket.usernames.length; i++) {
+			userlist.append(userlistPacket.usernames[i] + " : " + userlistPacket.userIds[i] + "\n");
 		}
 
 		usermap.clear();
 		for (int i = 0; i < userlistPacket.usernames.length; i++) {
 			usermap.put(userlistPacket.userIds[i], userlistPacket.usernames[i]);
 		}
+
 	}
 
 	public String getUserNameByID(int userID) {

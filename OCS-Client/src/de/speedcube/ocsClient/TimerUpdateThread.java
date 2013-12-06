@@ -23,7 +23,7 @@ public class TimerUpdateThread extends Thread {
 	@Override
 	public void run() {
 		while (!stop) {
-			timerGui.setText(convertToString((System.currentTimeMillis() - startTimerMillis)*1000000));
+			timerGui.setText(convertToString((System.currentTimeMillis() - startTimerMillis) * 1000000));
 			try {
 				Thread.sleep(80);
 			} catch (InterruptedException e) {
@@ -34,6 +34,13 @@ public class TimerUpdateThread extends Thread {
 
 	private String convertToString(long timeDelta) {
 		int timeInMillis = (int) (timeDelta / 1000000);
-		return String.valueOf(timeInMillis);
+		int seconds = timeInMillis / 1000;
+		int millis = timeInMillis % 1000;
+
+		int minutes = seconds / 60;
+		int temp1 = millis / 10;
+		seconds %= 60;
+
+		return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + "," + (temp1 < 10 ? "0" + temp1 : temp1);
 	}
 }

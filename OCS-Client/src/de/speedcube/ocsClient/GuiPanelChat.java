@@ -58,7 +58,7 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void addChatMessage(PacketChatBroadcast message) {
-		chatMessages.add("<b>" + window.userlistPanel.getUserNameByID(message.userId) + "</b> - " + message.text);
+		chatMessages.add("<b>" + message.username + "</b> - " + message.text);
 		setTextField();
 	}
 

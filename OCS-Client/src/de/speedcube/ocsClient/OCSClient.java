@@ -1,5 +1,6 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -52,6 +53,10 @@ public class OCSClient extends JFrame {
 					add(userlistPanel);
 				} else if (p instanceof PacketUserlist) {
 					userlistPanel.updateUserlist((PacketUserlist) p);
+				} else if (p instanceof PacketLogout) {
+					removeAllGuis();
+					add(loginPanel);
+					loginPanel.setAlertText(((PacketLogout) p).msg);
 				}
 			}
 		}
