@@ -1,6 +1,5 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -15,6 +14,9 @@ public class OCSClient extends JFrame {
 	public String username = "undefined";
 
 	public Object receiveNotify;
+
+	public UserList userList;
+
 	public GuiPanelChat chatPanel;
 	public GuiPanelLogin loginPanel;
 	public GuiPanelUserlist userlistPanel;
@@ -23,6 +25,7 @@ public class OCSClient extends JFrame {
 	public OCSClient() {
 		receiveNotify = new Object();
 		client = new Client("felk.servegame.com", 34543, receiveNotify);
+		userList = new UserList();
 
 		setupWindow();
 		boolean running = true;
@@ -49,14 +52,16 @@ public class OCSClient extends JFrame {
 				} else if (p instanceof PacketLoginSuccess) {
 					username = ((PacketLoginSuccess) p).username;
 					removeAllGuis();
-					add(chatPanel);
-					add(userlistPanel);
+					addGui(chatPanel);
+					addGui(userlistPanel);
 				} else if (p instanceof PacketUserlist) {
 					userlistPanel.updateUserlist((PacketUserlist) p);
 				} else if (p instanceof PacketLogout) {
 					removeAllGuis();
-					add(loginPanel);
+					addGui(loginPanel);
 					loginPanel.setAlertText(((PacketLogout) p).msg);
+				} else if (p instanceof PacketUserInfo) {
+					userList.addUsers((PacketUserInfo) p);
 				}
 			}
 		}
@@ -67,6 +72,11 @@ public class OCSClient extends JFrame {
 		remove(chatPanel);
 		remove(userlistPanel);
 		remove(timerPanel);
+	}
+
+	public void addGui(GuiPanel gui) {
+		add(gui);
+		validate();
 	}
 
 	public void setupWindow() {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
-import javax.swing.text.JTextComponent;
 import javax.swing.text.html.HTMLEditorKit;
 
 import de.speedcube.ocsClient.network.Client;
@@ -58,7 +57,7 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void addChatMessage(PacketChatBroadcast message) {
-		chatMessages.add("<b>" + message.username + "</b> - " + message.text);
+		chatMessages.add("<b>" + window.userList.getUserNameByID(message.userId) + "</b> - " + message.text);
 		setTextField();
 	}
 

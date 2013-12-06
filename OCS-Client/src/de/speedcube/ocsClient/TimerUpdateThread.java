@@ -1,7 +1,5 @@
 package de.speedcube.ocsClient;
 
-import javax.swing.JLabel;
-
 public class TimerUpdateThread extends Thread {
 
 	private GuiPanelTimer timerGui;
