@@ -3,11 +3,11 @@ package de.speedcube.ocsClient;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ChatTextFieldListener implements KeyListener {
+public class ChatKeyListener implements KeyListener {
 
 	private GuiPanelChat panel;
 
-	public ChatTextFieldListener(GuiPanelChat panel) {
+	public ChatKeyListener(GuiPanelChat panel) {
 		this.panel = panel;
 	}
 

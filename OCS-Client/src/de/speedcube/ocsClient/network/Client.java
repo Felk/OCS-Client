@@ -17,20 +17,30 @@ public class Client {
 	public int clientType = CLIENT;
 	public PacketConnectionInfo connectionInfo;
 	public boolean connectionInfoReceived = false;
-	public boolean connectionInfoSent = false;
+	private boolean connectionInfoSent = false;
 	private Object receiveNotify;
 	//public ClientInformation clientInformation = null;
 	public String salt;
 
 	public String closeMessage = "";
 
+	public Client() {
+
+	}
+
 	public Client(String adress, int port, Object receiveNotify) {
+		connect(adress, port, receiveNotify);
+	}
+
+	public void connect(String adress, int port, Object receiveNotify) {
+		if (connected) return;
 		this.receiveNotify = receiveNotify;
 		try {
 			socket = new Socket(adress, port);
 			connected = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return;
 		}
 		init();
 	}

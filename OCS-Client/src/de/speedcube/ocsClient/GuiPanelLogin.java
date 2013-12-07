@@ -1,5 +1,6 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
@@ -8,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.*;
 
 import de.speedcube.ocsClient.network.Client;
 
@@ -30,6 +34,8 @@ public class GuiPanelLogin extends GuiPanel {
 
 		alertLabel = new JLabel();
 		alertLabel.setText("");
+		add(alertLabel);
+
 		//login
 
 		usernameFieldLogin = new JTextField();
@@ -60,7 +66,10 @@ public class GuiPanelLogin extends GuiPanel {
 
 		//layout
 
-		layout.putConstraint(SpringLayout.NORTH, usernameFieldLogin, 50, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.NORTH, alertLabel, 15, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, alertLabel, 70, SpringLayout.WEST, this);
+
+		layout.putConstraint(SpringLayout.NORTH, usernameFieldLogin, 90, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, usernameFieldLogin, 50, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.WEST, passwordFieldLogin, 50, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.WEST, loginButton, 50, SpringLayout.WEST, this);
@@ -86,11 +95,25 @@ public class GuiPanelLogin extends GuiPanel {
 		add(component);
 	}
 
+	private void setButtonStyle(JButton button) {
+		button.setForeground(Color.red);
+		button.setBackground(Color.decode("#444444"));
+		Border line = new LineBorder(Color.BLACK);
+		Border margin = new EmptyBorder(5, 15, 5, 15);
+		Border compound = new CompoundBorder(line, margin);
+		button.setBorder(compound);
+	}
+
 	public String getPassword() {
 		return new String(passwordFieldLogin.getPassword());
 	}
 
 	public void setAlertText(String text) {
 		alertLabel.setText(text);
+	}
+
+	public void enableButtons(boolean enable) {
+		loginButton.setEnabled(enable);
+		registerButton.setEnabled(enable);
 	}
 }

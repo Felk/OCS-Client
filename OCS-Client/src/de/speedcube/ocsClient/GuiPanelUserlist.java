@@ -21,10 +21,10 @@ public class GuiPanelUserlist extends GuiPanel {
 		this.window = window;
 
 		setLayout(null);
-		setBounds(500, 0, 300, 400);
+		setBounds(500, 0, 300, 250);
 
 		userlist = new JEditorPane();
-		userlist.setBounds(0, 0, 300, 400);
+		userlist.setBounds(0, 0, 300, 250);
 		userlist.setEditable(false);
 		HTMLEditorKit htmlKit = new HTMLEditorKit();
 		userlist.setEditorKit(htmlKit);
@@ -40,7 +40,7 @@ public class GuiPanelUserlist extends GuiPanel {
 	public void updateUserlist(PacketUserlist userlistPacket) {
 		this.userlistPacket = userlistPacket;
 
-		synchronized (userlist) {
+		//synchronized (userlist) {
 			StringBuilder textBuffer = new StringBuilder();
 			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
 
@@ -55,8 +55,7 @@ public class GuiPanelUserlist extends GuiPanel {
 			textBuffer.append("</body></html>");
 			userlist.setText(textBuffer.toString());
 			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-			System.out.println(userlist.getText());
-		}
+		//}
 	}
 
 	private String getTextAreaStyle() {
@@ -71,8 +70,6 @@ public class GuiPanelUserlist extends GuiPanel {
 		}
 		styleBuffer.append(".rank{color: red;} .status{color: yellow;}");
 		styleBuffer.append("</style></head>");
-
-		System.out.println(styleBuffer.toString());
 
 		return styleBuffer.toString();
 	}

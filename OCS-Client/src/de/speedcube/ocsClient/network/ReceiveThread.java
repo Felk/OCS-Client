@@ -62,6 +62,7 @@ public class ReceiveThread extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 			client.stopClient();
+			System.out.println("test");
 		}
 	}
 

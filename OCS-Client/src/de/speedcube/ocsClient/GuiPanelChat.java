@@ -41,7 +41,7 @@ public class GuiPanelChat extends GuiPanel {
 
 		chatField = new JTextField();
 		chatField.setBounds(0, 400, 300, 30);
-		chatField.addKeyListener(new ChatTextFieldListener(this));
+		chatField.addKeyListener(new ChatKeyListener(this));
 
 		chatButton = new JButton();
 		chatButton.setBounds(300, 400, 100, 30);

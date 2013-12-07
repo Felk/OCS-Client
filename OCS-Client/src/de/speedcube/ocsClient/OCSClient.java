@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.*;
@@ -25,10 +27,24 @@ public class OCSClient extends JFrame {
 
 	public OCSClient() {
 		receiveNotify = new Object();
-		client = new Client("felk.servegame.com", 34543, receiveNotify);
-		userList = new UserList();
+
+		client = new Client();
 
 		setupWindow();
+		loginPanel.enableButtons(false);
+		loginPanel.setAlertText("Connecting...");
+		client.connect("felk.servegame.com", 34543, receiveNotify);
+
+		if (client.connected) {
+			loginPanel.setAlertText("Connected");
+			loginPanel.enableButtons(true);
+		} else {
+			loginPanel.setAlertText("failed to connect!");
+			return;
+		}
+
+		userList = new UserList();
+
 		boolean running = true;
 
 		while (running) {
@@ -60,6 +76,7 @@ public class OCSClient extends JFrame {
 					removeAllGuis();
 					addGui(chatPanel);
 					addGui(userlistPanel);
+					addGui(timerPanel);
 				} else if (p instanceof PacketUserlist) {
 					userlistPanel.updateUserlist((PacketUserlist) p);
 				} else if (p instanceof PacketLogout) {
@@ -91,6 +108,14 @@ public class OCSClient extends JFrame {
 	public void setupWindow() {
 		setTitle("OCS");
 		setLayout(null);
+
+		//set OS style
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
 		setSize(800, 600);
 		getContentPane().setBackground(Color.decode("#444444"));
 		setLocationRelativeTo(null);
@@ -103,7 +128,9 @@ public class OCSClient extends JFrame {
 		timerPanel = new GuiPanelTimer(client, this);
 
 		add(loginPanel);
-
+		/*add(chatPanel);
+		add(userlistPanel);
+		add(timerPanel);*/
 		validate();
 		repaint();
 	}
