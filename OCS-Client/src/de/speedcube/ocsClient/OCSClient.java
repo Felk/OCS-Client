@@ -1,12 +1,9 @@
 package de.speedcube.ocsClient;
 
 import java.awt.Color;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.*;

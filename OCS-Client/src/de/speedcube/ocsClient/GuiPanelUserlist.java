@@ -1,13 +1,13 @@
 package de.speedcube.ocsClient;
 
 import javax.swing.JEditorPane;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLEditorKit;
 
 import de.speedcube.ocsClient.network.Client;
+import de.speedcube.ocsUtilities.UserInfo;
+import de.speedcube.ocsUtilities.Userranks;
 import de.speedcube.ocsUtilities.packets.PacketUserlist;
 
 public class GuiPanelUserlist extends GuiPanel {
@@ -42,21 +42,39 @@ public class GuiPanelUserlist extends GuiPanel {
 
 		synchronized (userlist) {
 			StringBuilder textBuffer = new StringBuilder();
-			textBuffer.append("<html>" + getTextAreaStyle());
+			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
 
 			for (int i : userlistPacket.userIds) {
-				textBuffer.append("<br>");
-				textBuffer.append(window.userList.getUserNameByID(i));
+				UserInfo userInfo = window.userList.getUserInfoByID(i);
+				if (userInfo != null) {
+					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
+					textBuffer.append(" - <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
+					textBuffer.append(" - <span class ='status'>" + userInfo.status + "</span>");
+				}
 			}
-			textBuffer.append("</html>");
+			textBuffer.append("</body></html>");
 			userlist.setText(textBuffer.toString());
-			JScrollBar vbar = userlistScrollPane.getVerticalScrollBar();
 			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+			System.out.println(userlist.getText());
 		}
 	}
 
 	private String getTextAreaStyle() {
-		return "<head><style type='text/css'>body { background-color:#222233; color:#ffffff;}</style></head>";
+		StringBuilder styleBuffer = new StringBuilder();
+
+		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff;} ");
+		for (int i : userlistPacket.userIds) {
+			UserInfo userInfo = window.userList.getUserInfoByID(i);
+			if (userInfo != null) {
+				styleBuffer.append(".u" + userInfo.userID + "{color: " + Integer.toHexString(userInfo.color) + "; font-weight:bold;}");
+			}
+		}
+		styleBuffer.append(".rank{color: red;} .status{color: yellow;}");
+		styleBuffer.append("</style></head>");
+
+		System.out.println(styleBuffer.toString());
+
+		return styleBuffer.toString();
 	}
 
 	public void updateUserlist() {

@@ -1,6 +1,5 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -74,7 +73,6 @@ public class GuiPanelChat extends GuiPanel {
 			}
 			textBuffer.append("</html>");
 			chatArea.setText(textBuffer.toString());
-			JScrollBar vbar = chatScrollPane.getVerticalScrollBar();
 			((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
 	}
