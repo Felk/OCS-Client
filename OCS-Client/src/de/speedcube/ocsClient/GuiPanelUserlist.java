@@ -41,33 +41,36 @@ public class GuiPanelUserlist extends GuiPanel {
 		this.userlistPacket = userlistPacket;
 
 		//synchronized (userlist) {
-			StringBuilder textBuffer = new StringBuilder();
-			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
+		StringBuilder textBuffer = new StringBuilder();
+		textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
 
-			for (int i : userlistPacket.userIds) {
-				UserInfo userInfo = window.userList.getUserInfoByID(i);
-				if (userInfo != null) {
-					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
-					textBuffer.append(" - <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
-					textBuffer.append(" - <span class ='status'>" + userInfo.status + "</span>");
-				}
-			}
-			textBuffer.append("</body></html>");
-			userlist.setText(textBuffer.toString());
-			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		//}
-	}
-
-	private String getTextAreaStyle() {
-		StringBuilder styleBuffer = new StringBuilder();
-
-		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff;} ");
 		for (int i : userlistPacket.userIds) {
 			UserInfo userInfo = window.userList.getUserInfoByID(i);
 			if (userInfo != null) {
-				styleBuffer.append(".u" + userInfo.userID + "{color: " + Integer.toHexString(userInfo.color) + "; font-weight:bold;}");
+				textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
+				textBuffer.append(" - <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
+				textBuffer.append(" - <span class ='status'>" + userInfo.status + "</span>");
 			}
 		}
+		textBuffer.append("</body></html>");
+		userlist.setText(textBuffer.toString());
+		((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		//}
+	}
+
+	public String getTextAreaStyle() {
+		StringBuilder styleBuffer = new StringBuilder();
+
+		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff;} ");
+		if (userlistPacket != null) {
+			for (int i : userlistPacket.userIds) {
+				UserInfo userInfo = window.userList.getUserInfoByID(i);
+				if (userInfo != null) {
+					styleBuffer.append(".u" + userInfo.userID + "{color: " + Integer.toHexString(userInfo.color) + "; font-weight:bold;}");
+				}
+			}
+		}
+
 		styleBuffer.append(".rank{color: red;} .status{color: yellow;}");
 		styleBuffer.append("</style></head>");
 

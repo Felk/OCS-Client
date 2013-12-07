@@ -58,7 +58,7 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void addChatMessage(PacketChatBroadcast message) {
-		chatMessages.add("<b>" + window.userList.getUserNameByID(message.userId) + "</b> - " + message.text);
+		chatMessages.add("<span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
 		setTextField();
 	}
 
@@ -77,8 +77,8 @@ public class GuiPanelChat extends GuiPanel {
 		}
 	}
 
-	private String getTextAreaStyle() {
-		return "<head><style type='text/css'>body { background-color:#222233; color:#ffffff;}</style></head>";
+	public String getTextAreaStyle() {
+		return window.userlistPanel.getTextAreaStyle();
 	}
 
 	public void sendChatMessage() {

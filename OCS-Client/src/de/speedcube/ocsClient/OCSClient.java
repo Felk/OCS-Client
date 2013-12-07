@@ -123,8 +123,8 @@ public class OCSClient extends JFrame {
 		setVisible(true);
 
 		loginPanel = new GuiPanelLogin(client, this);
-		chatPanel = new GuiPanelChat(client, this);
 		userlistPanel = new GuiPanelUserlist(client, this);
+		chatPanel = new GuiPanelChat(client, this);
 		timerPanel = new GuiPanelTimer(client, this);
 
 		add(loginPanel);

@@ -19,6 +19,7 @@ public class TimerUpdateThread extends Thread {
 
 	public String stopTimer() {
 		stop = true;
+		timerGui.setText(convertToString(System.nanoTime() - startTimeNanos));
 		return convertToString(System.nanoTime() - startTimeNanos);
 	}
 
