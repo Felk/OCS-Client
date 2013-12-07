@@ -60,6 +60,7 @@ public class OCSClient extends JFrame {
 						e.printStackTrace();
 					}
 				}
+
 				packets = client.getData(0);
 			}
 
@@ -88,6 +89,13 @@ public class OCSClient extends JFrame {
 					userlistPanel.updateUserlist();
 					chatPanel.setTextField();
 				}
+			}
+
+			if (!client.connected) {
+				removeAllGuis();
+				addGui(loginPanel);
+				loginPanel.enableButtons(false);
+				loginPanel.setAlertText("lost connection");
 			}
 		}
 	}

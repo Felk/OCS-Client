@@ -87,6 +87,10 @@ public class Client {
 		receiver.stopThread();
 
 		sender.stopThread();
+
+		synchronized (receiveNotify) {
+			receiveNotify.notify();
+		}
 	}
 
 	/*public boolean isValid() {

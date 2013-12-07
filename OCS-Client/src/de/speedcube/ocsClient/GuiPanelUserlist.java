@@ -61,7 +61,7 @@ public class GuiPanelUserlist extends GuiPanel {
 	public String getTextAreaStyle() {
 		StringBuilder styleBuffer = new StringBuilder();
 
-		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff;} ");
+		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff; font-family:Arial;} ");
 		if (userlistPacket != null) {
 			for (int i : userlistPacket.userIds) {
 				UserInfo userInfo = window.userList.getUserInfoByID(i);
