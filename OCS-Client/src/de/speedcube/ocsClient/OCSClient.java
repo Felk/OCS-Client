@@ -124,7 +124,7 @@ public class OCSClient extends JFrame {
 			e.printStackTrace();
 		}
 
-		setSize(800, 600);
+		setSize(820, 600);
 		getContentPane().setBackground(Color.decode("#444444"));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

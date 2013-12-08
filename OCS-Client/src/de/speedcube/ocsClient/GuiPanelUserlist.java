@@ -40,22 +40,22 @@ public class GuiPanelUserlist extends GuiPanel {
 	public void updateUserlist(PacketUserlist userlistPacket) {
 		this.userlistPacket = userlistPacket;
 
-		//synchronized (userlist) {
-		StringBuilder textBuffer = new StringBuilder();
-		textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
+		synchronized (userlist) {
+			StringBuilder textBuffer = new StringBuilder();
+			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
 
-		for (int i : userlistPacket.userIds) {
-			UserInfo userInfo = window.userList.getUserInfoByID(i);
-			if (userInfo != null) {
-				textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
-				textBuffer.append(" - <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
-				textBuffer.append(" - <span class ='status'>" + userInfo.status + "</span>");
+			for (int i : userlistPacket.userIds) {
+				UserInfo userInfo = window.userList.getUserInfoByID(i);
+				if (userInfo != null) {
+					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
+					if (userInfo.rank > Userranks.HIGH) textBuffer.append(" <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
+					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + userInfo.status + "</span>");
+				}
 			}
+			textBuffer.append("</body></html>");
+			userlist.setText(textBuffer.toString());
+			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
-		textBuffer.append("</body></html>");
-		userlist.setText(textBuffer.toString());
-		((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		//}
 	}
 
 	public String getTextAreaStyle() {
