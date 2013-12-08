@@ -61,7 +61,7 @@ public class OCSClient extends JFrame {
 					}
 				}
 
-				packets = client.getData(0);
+				packets = client.getData(Packet.DEFAULT_CHANNEL);
 			}
 
 			for (Packet p : packets) {
@@ -80,16 +80,14 @@ public class OCSClient extends JFrame {
 					addGui(timerPanel);
 				} else if (p instanceof PacketUserlist) {
 					userlistPanel.updateUserlist((PacketUserlist) p);
-				} else if (p instanceof PacketLogout) {
-					removeAllGuis();
-					addGui(loginPanel);
-					loginPanel.setAlertText(((PacketLogout) p).msg);
 				} else if (p instanceof PacketUserInfo) {
 					userList.addUsers((PacketUserInfo) p);
 					userlistPanel.updateUserlist();
 					chatPanel.setTextField();
 				}
 			}
+
+			loginPanel.processPackets();
 
 			if (!client.connected) {
 				removeAllGuis();

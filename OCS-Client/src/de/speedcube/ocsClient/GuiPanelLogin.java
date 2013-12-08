@@ -2,6 +2,7 @@ package de.speedcube.ocsClient;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -14,10 +15,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.*;
 
 import de.speedcube.ocsClient.network.Client;
+import de.speedcube.ocsUtilities.packets.Packet;
+import de.speedcube.ocsUtilities.packets.PacketLoginError;
+import de.speedcube.ocsUtilities.packets.PacketLogout;
+import de.speedcube.ocsUtilities.packets.PacketRegistrationError;
+import de.speedcube.ocsUtilities.packets.PacketRegistrationSuccess;
 
 public class GuiPanelLogin extends GuiPanel {
 
 	public JLabel alertLabel;
+	private Client client;
+	private OCSClient window;
 
 	public JTextField usernameFieldLogin;
 	public JPasswordField passwordFieldLogin;
@@ -28,6 +36,9 @@ public class GuiPanelLogin extends GuiPanel {
 	public JButton registerButton;
 
 	public GuiPanelLogin(Client client, OCSClient window) {
+		this.client = client;
+		this.window = window;
+
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
 		setBounds(0, 0, window.getWidth(), window.getHeight());
@@ -110,6 +121,28 @@ public class GuiPanelLogin extends GuiPanel {
 
 	public void setAlertText(String text) {
 		alertLabel.setText(text);
+	}
+
+	public void processPackets() {
+		ArrayList<Packet> packets = client.getData(Packet.LOGIN_PAGE_CHANNEL);
+
+		for (Packet p : packets) {
+			if (p instanceof PacketLoginError) {
+				setAlertText(((PacketLoginError) p).msg);
+			} else if (p instanceof PacketLogout) {
+				window.removeAllGuis();
+				window.addGui(window.loginPanel);
+				window.loginPanel.setAlertText(((PacketLogout) p).msg);
+			} else if (p instanceof PacketRegistrationError) {
+				window.removeAllGuis();
+				window.addGui(window.loginPanel);
+				window.loginPanel.setAlertText("Registration failed");
+			} else if (p instanceof PacketRegistrationSuccess) {
+				window.removeAllGuis();
+				window.addGui(window.loginPanel);
+				window.loginPanel.setAlertText(((PacketRegistrationSuccess) p).username + " registered");
+			}
+		}
 	}
 
 	public void enableButtons(boolean enable) {

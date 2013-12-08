@@ -1,5 +1,7 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Color;
+
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;
@@ -61,7 +63,7 @@ public class GuiPanelUserlist extends GuiPanel {
 	public String getTextAreaStyle() {
 		StringBuilder styleBuffer = new StringBuilder();
 
-		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff; font-family:Arial; padding:3px;} ");
+		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff; font-family:Arial; padding:7px;} ");
 		if (userlistPacket != null) {
 			for (int i : userlistPacket.userIds) {
 				UserInfo userInfo = window.userList.getUserInfoByID(i);
@@ -71,7 +73,7 @@ public class GuiPanelUserlist extends GuiPanel {
 			}
 		}
 
-		styleBuffer.append(".rank{color: red;} .status{color: yellow;}");
+		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;}");
 		styleBuffer.append("</style></head>");
 
 		return styleBuffer.toString();

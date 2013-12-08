@@ -61,8 +61,8 @@ public class GuiPanelChat extends GuiPanel {
 
 	public void addChatMessage(PacketChatBroadcast message) {
 		SimpleDateFormat chatTime = new SimpleDateFormat("H:mm");
-		String timerString = chatTime.format(new Date(message.timestamp));
-		chatMessages.add(timerString + "  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
+		String timeString = chatTime.format(new Date(message.timestamp));
+		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
 		setTextField();
 	}
 
