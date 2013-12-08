@@ -25,7 +25,7 @@ public class OCSClient extends JFrame {
 	public GuiPanelUserlist userlistPanel;
 	public GuiPanelTimer timerPanel;
 
-	public OCSClient() {
+	public OCSClient(String adress) {
 		receiveNotify = new Object();
 
 		client = new Client();
@@ -33,7 +33,7 @@ public class OCSClient extends JFrame {
 		setupWindow();
 		loginPanel.enableButtons(false);
 		loginPanel.setAlertText("Connecting...");
-		client.connect("felk.servegame.com", 34543, receiveNotify);
+		client.connect(adress, 34543, receiveNotify);
 
 		if (client.connected) {
 			loginPanel.setAlertText("Connected");
@@ -144,6 +144,16 @@ public class OCSClient extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new OCSClient();
+		String adress = "picocom.net";
+
+		if (args.length >= 2) {
+			for (int i = 0; i < args.length; i++) {
+				if (args[i].equals("-a") && i + 1 < args.length) {
+					adress = args[i + 1];
+				}
+			}
+		}
+
+		new OCSClient(adress);
 	}
 }
