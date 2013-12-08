@@ -1,6 +1,8 @@
 package de.speedcube.ocsClient;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -58,7 +60,9 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void addChatMessage(PacketChatBroadcast message) {
-		chatMessages.add("<span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
+		SimpleDateFormat chatTime = new SimpleDateFormat("H:m");
+		String timerString = chatTime.format(new Date(1386460713097L));
+		chatMessages.add("&lt;" + timerString + "&gt; <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
 		setTextField();
 	}
 
