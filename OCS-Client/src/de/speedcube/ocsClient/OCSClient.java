@@ -14,7 +14,7 @@ public class OCSClient extends JFrame {
 
 	public static final String version = "0";
 	public Client client;
-	public String username = "undefined";
+	public PacketLoginSuccess userInfo = null;
 
 	public Object receiveNotify;
 
@@ -73,7 +73,7 @@ public class OCSClient extends JFrame {
 					passwordPacket.salt = ((PacketSalt) p).salt;
 					client.sendPacket(passwordPacket);
 				} else if (p instanceof PacketLoginSuccess) {
-					username = ((PacketLoginSuccess) p).username;
+					userInfo = (PacketLoginSuccess) p;
 					removeAllGuis();
 					addGui(chatPanel);
 					addGui(userlistPanel);
@@ -151,7 +151,7 @@ public class OCSClient extends JFrame {
 				}
 			}
 		}
-		
+
 		new OCSClient(adress);
 	}
 }

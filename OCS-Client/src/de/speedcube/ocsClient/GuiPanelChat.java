@@ -66,7 +66,9 @@ public class GuiPanelChat extends GuiPanel {
 		String timeString = chatTime.format(new Date(message.timestamp));
 		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
 		setTextField();
-		newMsgSound.play();
+		if (message.userId != window.userInfo.userID) {
+			newMsgSound.play();
+		}
 	}
 
 	public void setTextField() {
