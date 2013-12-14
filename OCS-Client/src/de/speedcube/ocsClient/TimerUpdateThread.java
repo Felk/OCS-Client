@@ -1,9 +1,5 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Color;
-
-import javax.swing.border.LineBorder;
-
 public class TimerUpdateThread extends Thread {
 
 	private GuiPanelTimer timerGui;

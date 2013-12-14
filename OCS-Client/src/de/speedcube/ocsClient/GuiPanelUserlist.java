@@ -1,7 +1,5 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Color;
-
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;

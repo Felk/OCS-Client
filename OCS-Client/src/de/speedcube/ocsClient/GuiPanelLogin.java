@@ -1,6 +1,5 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
@@ -10,9 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.*;
 
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.Packet;
@@ -106,14 +102,14 @@ public class GuiPanelLogin extends GuiPanel {
 		add(component);
 	}
 
-	private void setButtonStyle(JButton button) {
+	/*private void setButtonStyle(JButton button) {
 		button.setForeground(Color.red);
 		button.setBackground(Color.decode("#444444"));
 		Border line = new LineBorder(Color.BLACK);
 		Border margin = new EmptyBorder(5, 15, 5, 15);
 		Border compound = new CompoundBorder(line, margin);
 		button.setBorder(compound);
-	}
+	}*/
 
 	public String getPassword() {
 		return new String(passwordFieldLogin.getPassword());
@@ -131,8 +127,9 @@ public class GuiPanelLogin extends GuiPanel {
 				setAlertText(((PacketLoginError) p).msg);
 			} else if (p instanceof PacketLogout) {
 				window.removeAllGuis();
-				window.addGui(window.loginPanel);
 				window.loginPanel.setAlertText(((PacketLogout) p).msg);
+				System.out.println(((PacketLogout) p).msg);
+				window.addGui(this);
 			} else if (p instanceof PacketRegistrationError) {
 				window.removeAllGuis();
 				window.addGui(window.loginPanel);

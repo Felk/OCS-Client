@@ -20,12 +20,14 @@ public class GuiPanelChat extends GuiPanel {
 	public JTextField chatField;
 	public JButton chatButton;
 	public OCSClient window;
+	private AudioFile newMsgSound;
 
 	public ArrayList<String> chatMessages;
 
 	public GuiPanelChat(Client client, OCSClient window) {
 		this.client = client;
 		this.window = window;
+		newMsgSound = new AudioFile("/newMsgSound3.wav");
 		chatMessages = new ArrayList<String>();
 
 		setLayout(null);
@@ -64,6 +66,7 @@ public class GuiPanelChat extends GuiPanel {
 		String timeString = chatTime.format(new Date(message.timestamp));
 		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + message.text);
 		setTextField();
+		newMsgSound.play();
 	}
 
 	public void setTextField() {

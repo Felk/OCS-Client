@@ -151,7 +151,7 @@ public class OCSClient extends JFrame {
 				}
 			}
 		}
-
+		
 		new OCSClient(adress);
 	}
 }
