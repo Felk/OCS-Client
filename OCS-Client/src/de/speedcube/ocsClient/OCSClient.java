@@ -2,7 +2,6 @@ package de.speedcube.ocsClient;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;

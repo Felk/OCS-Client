@@ -42,6 +42,7 @@ public class GuiPanelUserlist extends GuiPanel {
 
 		synchronized (userlist) {
 			StringBuilder textBuffer = new StringBuilder();
+			genTextAreaStyle(window.userList);
 			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
 
 			for (int i : userlistPacket.userIds) {
@@ -58,7 +59,7 @@ public class GuiPanelUserlist extends GuiPanel {
 		}
 	}
 
-	public String getTextAreaStyle() {
+	/*public String getTextAreaStyle() {
 		StringBuilder styleBuffer = new StringBuilder();
 
 		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff; font-family:Arial; padding:7px;} ");
@@ -71,11 +72,11 @@ public class GuiPanelUserlist extends GuiPanel {
 			}
 		}
 
-		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff; .system{color: #ff7f00;}");
+		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;} .system{color: #ff7f00;}");
 		styleBuffer.append("</style></head>");
 
 		return styleBuffer.toString();
-	}
+	}*/
 
 	public void updateUserlist() {
 		updateUserlist(userlistPacket);

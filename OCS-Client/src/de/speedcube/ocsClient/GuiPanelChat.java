@@ -2,7 +2,6 @@ package de.speedcube.ocsClient;
 
 import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +78,7 @@ public class GuiPanelChat extends GuiPanel {
 		add(chatField);
 		add(chatButton);
 
+		genTextAreaStyle(window.userList);
 		chatArea.setText("<html>" + getTextAreaStyle() + "<body>willkommen im OCS 1.0</body></html>");
 		validate();
 	}
@@ -96,7 +96,7 @@ public class GuiPanelChat extends GuiPanel {
 	public void addSystemMessage(PacketSystemMessage message) {
 		SimpleDateFormat chatTime = new SimpleDateFormat("H:mm");
 		String timeString = chatTime.format(new Date(message.timestamp));
-		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='system'>" + SystemStrings.getString(message.msg) + "</span>");
+		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='system'>" + SystemStrings.getString(message.msg, message.values) + "</span>");
 		setTextField();
 		newMsgSound.play(20);
 	}
@@ -119,7 +119,7 @@ public class GuiPanelChat extends GuiPanel {
 
 	private String setLinks(String text) {
 		String tlds = "de|com|info|net|at|org|ch|gov|us|to";
-		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")/?\\S*)\\b", " <a href=http://$2>$2</a> ");
+		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <a href=http://$2>$2</a> ");
 	}
 
 	public void processPackets() {
@@ -128,16 +128,10 @@ public class GuiPanelChat extends GuiPanel {
 		for (Packet p : packets) {
 			if (p instanceof PacketChatBroadcast) {
 				addChatMessage((PacketChatBroadcast) p);
-
-				PacketSystemMessage testMessage = new PacketSystemMessage();
 			} else if (p instanceof PacketSystemMessage) {
 				addSystemMessage((PacketSystemMessage) p);
 			}
 		}
-	}
-
-	public String getTextAreaStyle() {
-		return window.userlistPanel.getTextAreaStyle();
 	}
 
 	public void sendChatMessage() {

@@ -18,21 +18,25 @@ public class TimerStartKeyListener implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		if (timerUpdateThread != null) {
-			timerUpdateThread.stopTimer();
-			timerUpdateThread = null;
-			startNext = false;
-		} else {
-			startNext = true;
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (timerUpdateThread != null) {
+				timerUpdateThread.stopTimer();
+				timerUpdateThread = null;
+				startNext = false;
+			} else {
+				startNext = true;
+			}
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		if (timerUpdateThread == null && startNext) {
-			timerUpdateThread = new TimerUpdateThread(timerGui, System.nanoTime());
-			timerUpdateThread.start();
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (timerUpdateThread == null && startNext) {
+				timerUpdateThread = new TimerUpdateThread(timerGui, System.nanoTime());
+				timerUpdateThread.start();
+			}
 		}
 	}
 
