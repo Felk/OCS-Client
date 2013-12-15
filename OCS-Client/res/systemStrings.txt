@@ -1,6 +1,7 @@
 system.connecting=verbinde...
 system.connected=verbunden
 system.connection_failed=Verbindung fehlgeschlagen
+system.connection_lost=Verbindung verloren
 system.login=einloggen
 system.register=registrieren
 system.title=OCS

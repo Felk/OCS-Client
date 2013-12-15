@@ -15,6 +15,7 @@ public class OCSClient extends JFrame {
 	public static final String version = "0";
 	public Client client;
 	public PacketLoginSuccess userInfo = null;
+	public boolean disconnected = false;
 
 	public Object receiveNotify;
 
@@ -82,6 +83,9 @@ public class OCSClient extends JFrame {
 					userList.addUsers((PacketUserInfo) p);
 					userlistPanel.updateUserlist();
 					chatPanel.setTextField();
+				} else if (p instanceof PacketDisconnect) {
+					loginPanel.setAlertText(((PacketDisconnect) p).msg);
+					disconnected = true;
 				}
 			}
 
@@ -92,7 +96,7 @@ public class OCSClient extends JFrame {
 				removeAllGuis();
 				addGui(loginPanel);
 				loginPanel.enableButtons(false);
-				loginPanel.setAlertText("lost connection");
+				if (!disconnected) loginPanel.setAlertText(SystemStrings.getString("system.connection_lost"));
 			}
 		}
 	}
