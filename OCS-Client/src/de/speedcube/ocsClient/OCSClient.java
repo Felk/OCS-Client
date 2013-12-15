@@ -2,6 +2,7 @@ package de.speedcube.ocsClient;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -32,14 +33,14 @@ public class OCSClient extends JFrame {
 
 		setupWindow();
 		loginPanel.enableButtons(false);
-		loginPanel.setAlertText("Connecting...");
+		loginPanel.setAlertText(SystemStrings.getString("system.connecting"));
 		client.connect(adress, 34543, receiveNotify);
 
 		if (client.connected) {
-			loginPanel.setAlertText("Connected");
+			loginPanel.setAlertText(SystemStrings.getString("system.connected"));
 			loginPanel.enableButtons(true);
 		} else {
-			loginPanel.setAlertText("failed to connect!");
+			loginPanel.setAlertText(SystemStrings.getString("system.connection_failed"));
 			return;
 		}
 
@@ -65,9 +66,7 @@ public class OCSClient extends JFrame {
 			}
 
 			for (Packet p : packets) {
-				if (p instanceof PacketChatBroadcast) {
-					chatPanel.addChatMessage(((PacketChatBroadcast) p));
-				} else if (p instanceof PacketSalt) {
+				if (p instanceof PacketSalt) {
 					PacketLogin passwordPacket = new PacketLogin();
 					passwordPacket.password = loginPanel.getPassword();
 					passwordPacket.salt = ((PacketSalt) p).salt;
@@ -88,6 +87,7 @@ public class OCSClient extends JFrame {
 			}
 
 			loginPanel.processPackets();
+			chatPanel.processPackets();
 
 			if (!client.connected) {
 				removeAllGuis();
@@ -112,7 +112,7 @@ public class OCSClient extends JFrame {
 	}
 
 	public void setupWindow() {
-		setTitle("OCS");
+		setTitle(SystemStrings.getString("system.title"));
 		setLayout(null);
 
 		//set OS style

@@ -1,0 +1,12 @@
+systme.connecting=verbinde...
+system.connected=verbunden
+system.connection_failed=Verbindung fehlgeschlagen
+system.login=einloggen
+system.register=registrieren
+system.title=OCS
+
+reg.username_invalid=ungültiger Benutzername
+reg.username_taken=Name existiert bereits
+
+chat.command.insufficient_rank=Nicht genügend Rechte für diesen Befehl
+chat.command.unknown=Unbekannter Befehl

@@ -71,7 +71,7 @@ public class GuiPanelUserlist extends GuiPanel {
 			}
 		}
 
-		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;}");
+		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff; .system{color: #ff7f00;}");
 		styleBuffer.append("</style></head>");
 
 		return styleBuffer.toString();

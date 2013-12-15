@@ -38,7 +38,6 @@ public class TimerStartKeyListener implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 

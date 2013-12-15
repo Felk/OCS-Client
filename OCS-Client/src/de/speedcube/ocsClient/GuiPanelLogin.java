@@ -1,6 +1,10 @@
 package de.speedcube.ocsClient;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -50,10 +54,27 @@ public class GuiPanelLogin extends GuiPanel {
 
 		passwordFieldLogin = new JPasswordField();
 		setComponentSize(passwordFieldLogin);
+		passwordFieldLogin.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) loginButton.doClick();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+			}
+		});
 
 		loginButton = new JButton();
 		setComponentSize(loginButton);
-		loginButton.setText("login");
+		loginButton.setText(SystemStrings.getString("system.login"));
 		LoginButtonListener loginButtonListener = new LoginButtonListener(client, usernameFieldLogin, passwordFieldLogin, false);
 		loginButton.addActionListener(loginButtonListener);
 
@@ -67,7 +88,7 @@ public class GuiPanelLogin extends GuiPanel {
 
 		registerButton = new JButton();
 		setComponentSize(registerButton);
-		registerButton.setText("register");
+		registerButton.setText(SystemStrings.getString("system.register"));
 		LoginButtonListener registerButtonListener = new LoginButtonListener(client, usernameFieldRegister, passwordFieldRegister, true);
 		registerButton.addActionListener(registerButtonListener);
 

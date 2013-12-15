@@ -14,16 +14,18 @@ public class AudioFile {
 
 	public AudioFile(String filename) {
 		this.filename = filename;
-	}
 
-	public void play() {
 		try {
 			clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream(filename))));
-			clip.start();
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void play(float volume) {
+		clip.setFramePosition(0);
+		clip.start();
 
 	}
 }
