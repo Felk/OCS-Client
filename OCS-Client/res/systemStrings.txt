@@ -8,6 +8,7 @@ system.title=OCS
 
 reg.username_invalid=ungültiger Benutzername
 reg.username_taken=Name existiert bereits
+reg.success={1} erfolgreich registriert
 
 chat.command.insufficient_rank=Nicht genügend Rechte für den Befehl {1}
 chat.command.unknown=Unbekannter Befehl {1}

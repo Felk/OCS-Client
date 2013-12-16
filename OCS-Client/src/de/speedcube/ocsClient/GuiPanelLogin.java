@@ -52,23 +52,6 @@ public class GuiPanelLogin extends GuiPanel {
 
 		passwordFieldLogin = new JPasswordField();
 		setComponentSize(passwordFieldLogin);
-		passwordFieldLogin.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) loginButton.doClick();
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-			}
-		});
 
 		loginButton = new JButton();
 		setComponentSize(loginButton);
@@ -152,11 +135,11 @@ public class GuiPanelLogin extends GuiPanel {
 			} else if (p instanceof PacketRegistrationError) {
 				window.removeAllGuis();
 				window.addGui(window.loginPanel);
-				window.loginPanel.setAlertText("Registration failed");
+				window.loginPanel.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
 			} else if (p instanceof PacketRegistrationSuccess) {
 				window.removeAllGuis();
 				window.addGui(window.loginPanel);
-				window.loginPanel.setAlertText(((PacketRegistrationSuccess) p).username + " registered");
+				window.loginPanel.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
 			}
 		}
 	}
