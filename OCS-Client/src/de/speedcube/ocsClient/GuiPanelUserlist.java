@@ -50,7 +50,7 @@ public class GuiPanelUserlist extends GuiPanel {
 				if (userInfo != null) {
 					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
 					if (userInfo.rank > Userranks.HIGH) textBuffer.append(" <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
-					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + userInfo.status + "</span>");
+					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + escapeHTML(userInfo.status) + "</span>");
 				}
 			}
 			textBuffer.append("</body></html>");
@@ -77,6 +77,10 @@ public class GuiPanelUserlist extends GuiPanel {
 
 		return styleBuffer.toString();
 	}*/
+
+	public static String escapeHTML(String s) {
+		return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
 
 	public void updateUserlist() {
 		updateUserlist(userlistPacket);
