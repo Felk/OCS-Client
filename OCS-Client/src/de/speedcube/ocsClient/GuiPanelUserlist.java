@@ -1,7 +1,13 @@
 package de.speedcube.ocsClient;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -13,6 +19,7 @@ import de.speedcube.ocsUtilities.packets.PacketUserlist;
 public class GuiPanelUserlist extends GuiPanel {
 
 	public JEditorPane userlist;
+	private HTMLEditorKit htmlEditor;
 	public JScrollPane userlistScrollPane;
 	private OCSClient window;
 	private PacketUserlist userlistPacket;
@@ -26,8 +33,19 @@ public class GuiPanelUserlist extends GuiPanel {
 		userlist = new JEditorPane();
 		userlist.setBounds(0, 0, 300, 250);
 		userlist.setEditable(false);
-		HTMLEditorKit htmlKit = new HTMLEditorKit();
-		userlist.setEditorKit(htmlKit);
+		htmlEditor = new HTMLEditorKit();
+		userlist.setEditorKit(htmlEditor);
+		userlist.addHyperlinkListener(new HyperlinkListener() {
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+					try {
+						Desktop.getDesktop().browse(e.getURL().toURI());
+					} catch (IOException | URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 
 		userlistScrollPane = new JScrollPane(userlist);
 		userlistScrollPane.setBounds(userlist.getBounds());
@@ -43,14 +61,18 @@ public class GuiPanelUserlist extends GuiPanel {
 		synchronized (userlist) {
 			StringBuilder textBuffer = new StringBuilder();
 			genTextAreaStyle(window.userList);
-			textBuffer.append("<html>" + getTextAreaStyle() + "<body>");
+			htmlEditor.setStyleSheet(getTextAreaStyle());
+			userlist.setDocument(htmlEditor.createDefaultDocument());
+
+			textBuffer.append("<html><body>");
 
 			for (int i : userlistPacket.userIds) {
 				UserInfo userInfo = window.userList.getUserInfoByID(i);
 				if (userInfo != null) {
 					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
 					if (userInfo.rank > Userranks.HIGH) textBuffer.append(" <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
-					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + escapeHTML(userInfo.status) + "</span>");
+					String status = escapeHTML(userInfo.status);
+					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + (userInfo.rank >= Userranks.HIGH ? setLinks(status) : status) + "</span>");
 				}
 			}
 			textBuffer.append("</body></html>");
@@ -77,10 +99,6 @@ public class GuiPanelUserlist extends GuiPanel {
 
 		return styleBuffer.toString();
 	}*/
-
-	public static String escapeHTML(String s) {
-		return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-	}
 
 	public void updateUserlist() {
 		updateUserlist(userlistPacket);

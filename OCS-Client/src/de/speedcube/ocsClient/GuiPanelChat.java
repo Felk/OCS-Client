@@ -23,6 +23,7 @@ public class GuiPanelChat extends GuiPanel {
 
 	private Client client;
 	public JEditorPane chatArea;
+	private HTMLEditorKit htmlEditor;
 	public JScrollPane chatScrollPane;
 	public JTextField chatField;
 	public JButton chatButton;
@@ -44,8 +45,8 @@ public class GuiPanelChat extends GuiPanel {
 		chatArea = new JEditorPane();
 		chatArea.setBounds(0, 0, 400, 400);
 		chatArea.setEditable(false);
-		HTMLEditorKit htmlKit = new HTMLEditorKit();
-		chatArea.setEditorKit(htmlKit);
+		htmlEditor = new HTMLEditorKit();
+		chatArea.setEditorKit(htmlEditor);
 
 		//link listener to open links
 		chatArea.addHyperlinkListener(new HyperlinkListener() {
@@ -86,7 +87,7 @@ public class GuiPanelChat extends GuiPanel {
 	public void addChatMessage(PacketChatBroadcast message) {
 		SimpleDateFormat chatTime = new SimpleDateFormat("H:mm");
 		String timeString = chatTime.format(new Date(message.timestamp));
-		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + setLinks(message.text));
+		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + setLinks(escapeHTML(message.text)));
 		setTextField();
 		if (message.userId != window.userInfo.userID) {
 			newMsgSound.play(20);
@@ -104,7 +105,9 @@ public class GuiPanelChat extends GuiPanel {
 	public void setTextField() {
 		synchronized (chatArea) {
 			StringBuilder textBuffer = new StringBuilder();
-			textBuffer.append("<html>" + getTextAreaStyle());
+			htmlEditor.setStyleSheet(getTextAreaStyle());
+			chatArea.setDocument(htmlEditor.createDefaultDocument());
+			textBuffer.append("<html>");
 
 			for (String s : chatMessages) {
 				textBuffer.append("<br>");
@@ -115,11 +118,6 @@ public class GuiPanelChat extends GuiPanel {
 			chatArea.setText(textBuffer.toString());
 			((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
-	}
-
-	private String setLinks(String text) {
-		String tlds = "de|com|info|net|at|org|ch|gov|us|to";
-		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <a href=http://$2>$2</a> ");
 	}
 
 	public void processPackets() {

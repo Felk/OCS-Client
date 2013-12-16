@@ -1,31 +1,37 @@
 package de.speedcube.ocsClient;
 
 import javax.swing.JPanel;
+import javax.swing.text.html.StyleSheet;
 
 import de.speedcube.ocsUtilities.UserInfo;
 
 public abstract class GuiPanel extends JPanel {
-	private static String textAreaStyle;
+	private static StyleSheet style;
 
 	public static void genTextAreaStyle(UserList userList) {
-		StringBuilder styleBuffer = new StringBuilder();
+		style = new StyleSheet();
+		style.addRule("body{font-size: 14pt; background-color:#222233; color:#ffffff; font-family:Arial; padding:7px;}");
 
-		styleBuffer.append("<head><style type ='text/css'> body { background-color:#222233; color:#ffffff; font-family:Arial; padding:7px;} ");
 		if (userList != null) {
 			for (UserInfo userInfo : userList.usersMap.values()) {
 				if (userInfo != null) {
-					styleBuffer.append(".u" + userInfo.userID + "{color: " + Integer.toHexString(userInfo.color) + "; font-weight:bold;}");
+					style.addRule(".u" + userInfo.userID + "{color: " + Integer.toHexString(userInfo.color) + "; font-weight:bold;}");
 				}
 			}
 		}
-
-		styleBuffer.append(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;} .system{color: #ff7f00;}");
-		styleBuffer.append("</style></head>");
-
-		textAreaStyle = styleBuffer.toString();
+		style.addRule(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;} .system{color: #ff7f00;} a{color: #3399FF !important; text-decoration: none !important; } .status.a{color: #3399FF !important; text-decoration: none !important; }");
 	}
 
-	public static String getTextAreaStyle() {
-		return textAreaStyle;
+	public static StyleSheet getTextAreaStyle() {
+		return style;
+	}
+
+	public static String escapeHTML(String s) {
+		return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+	public static String setLinks(String text) {
+		String tlds = "de|com|info|net|at|org|ch|gov|us|to|cz";
+		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <a href=http://$2>$2</a> ");
 	}
 }
