@@ -55,7 +55,7 @@ public class GuiPanelLogin extends GuiPanel {
 
 		loginButton = new JButton();
 		setComponentSize(loginButton);
-		loginButton.setText(SystemStrings.getString("system.login"));
+		loginButton.setText(SystemStrings.getString("system.label.login"));
 		LoginButtonListener loginButtonListener = new LoginButtonListener(client, usernameFieldLogin, passwordFieldLogin, false);
 		loginButton.addActionListener(loginButtonListener);
 
@@ -69,7 +69,7 @@ public class GuiPanelLogin extends GuiPanel {
 
 		registerButton = new JButton();
 		setComponentSize(registerButton);
-		registerButton.setText(SystemStrings.getString("system.register"));
+		registerButton.setText(SystemStrings.getString("system.label.register"));
 		LoginButtonListener registerButtonListener = new LoginButtonListener(client, usernameFieldRegister, passwordFieldRegister, true);
 		registerButton.addActionListener(registerButtonListener);
 
@@ -126,7 +126,7 @@ public class GuiPanelLogin extends GuiPanel {
 
 		for (Packet p : packets) {
 			if (p instanceof PacketLoginError) {
-				setAlertText(((PacketLoginError) p).msg);
+				setAlertText(SystemStrings.getString(((PacketLoginError) p).msg));
 			} else if (p instanceof PacketLogout) {
 				window.removeAllGuis();
 				window.loginPanel.setAlertText(((PacketLogout) p).msg);

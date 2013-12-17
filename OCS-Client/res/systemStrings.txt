@@ -2,13 +2,17 @@ system.connecting=verbinde...
 system.connected=verbunden
 system.connection_failed=Verbindung fehlgeschlagen
 system.connection_lost=Verbindung verloren
-system.login=einloggen
-system.register=registrieren
+system.label.login=einloggen
+system.label.register=registrieren
+system.label.activate_sound=sound
 system.title=OCS
 
 reg.username_invalid=ungültiger Benutzername
 reg.username_taken=Name existiert bereits
 reg.success={1} erfolgreich registriert
+
+login.fail_username=Falscher Benutzername
+login.fail_password=Falsches Passwort
 
 chat.command.insufficient_rank=Nicht genügend Rechte für den Befehl {1}
 chat.command.unknown=Unbekannter Befehl {1}

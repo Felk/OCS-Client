@@ -23,7 +23,7 @@ public class AudioFile {
 		}
 	}
 
-	public void play(float volume) {
+	public void play() {
 		clip.setFramePosition(0);
 		clip.start();
 

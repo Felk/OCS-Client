@@ -27,6 +27,7 @@ public class GuiPanelChat extends GuiPanel {
 	public JScrollPane chatScrollPane;
 	public JTextField chatField;
 	public JButton chatButton;
+	public JCheckBox soundCheckbox;
 	public OCSClient window;
 	private AudioFile newMsgSound;
 
@@ -40,7 +41,7 @@ public class GuiPanelChat extends GuiPanel {
 
 		setLayout(null);
 
-		setBounds(0, 0, 400, 430);
+		setBounds(0, 0, 400, 450);
 
 		chatArea = new JEditorPane();
 		chatArea.setBounds(0, 0, 400, 400);
@@ -75,9 +76,14 @@ public class GuiPanelChat extends GuiPanel {
 		ChatButtonListener chatButtonListener = new ChatButtonListener(this);
 		chatButton.addActionListener(chatButtonListener);
 
+		soundCheckbox = new JCheckBox(SystemStrings.getString("system.label.activate_sound"));
+		soundCheckbox.setBounds(0, 430, 300, 20);
+		soundCheckbox.setSelected(true);
+
 		add(chatScrollPane);
 		add(chatField);
 		add(chatButton);
+		add(soundCheckbox);
 
 		genTextAreaStyle(window.userList);
 		chatArea.setText("<html>" + getTextAreaStyle() + "<body>willkommen im OCS 1.0</body></html>");
@@ -89,8 +95,8 @@ public class GuiPanelChat extends GuiPanel {
 		String timeString = chatTime.format(new Date(message.timestamp));
 		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + setLinks(escapeHTML(message.text)));
 		setTextField();
-		if (message.userId != window.userInfo.userID) {
-			newMsgSound.play(20);
+		if (message.userId != window.userInfo.userID && soundCheckbox.isSelected()) {
+			newMsgSound.play();
 		}
 	}
 
@@ -99,7 +105,7 @@ public class GuiPanelChat extends GuiPanel {
 		String timeString = chatTime.format(new Date(message.timestamp));
 		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='system'>" + SystemStrings.getString(message.msg, message.values) + "</span>");
 		setTextField();
-		newMsgSound.play(20);
+		if (soundCheckbox.isSelected()) newMsgSound.play();
 	}
 
 	public void setTextField() {
