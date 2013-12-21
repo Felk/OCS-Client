@@ -13,7 +13,7 @@ import de.speedcube.ocsUtilities.packets.*;
 
 public class OCSClient extends JFrame {
 
-	public static final String version = "0.85";
+	public static final String version = "0.85.1";
 	public Client client;
 	public PacketLoginSuccess userInfo = null;
 	public boolean disconnected = false;
