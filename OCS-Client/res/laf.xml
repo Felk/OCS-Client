@@ -1,4 +1,28 @@
 <synth>
+	<!-- Chat style -->
+	<style id="ocsStyleChatButton">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state value="ENABLED">
+			<color value="#ffffff" type="FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/ChatButton.png" sourceInsets="10 10 10 10" />
+		</state>
+
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground" path="/ChatButtonPressed.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStyleChatButton" type="name" key="ChatButton" />
+
+	<style id="ocsStyleChatTextfield">
+		<insets top="0" left="10" right="10" bottom="0" />
+		<state value="ENABLED">
+			<color value="#000000" type="FOREGROUND" />
+			<imagePainter method="textfieldBackground" path="/ChatTextfield.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStyleChatTextfield" type="name" key="ChatTextfield" />
+
+	<!-- window style -->
 	<style id="ocsStyleButton">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state value="ENABLED">
@@ -10,7 +34,7 @@
 			<imagePainter method="buttonBackground" path="/buttonPressed.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
-	<bind style="ocsStyleButton" type="region" key="button" />
+	<bind style="ocsStyleButton" type="name" key="DefButton" />
 
 	<style id="ocsStyleTextfield">
 		<insets top="0" left="10" right="10" bottom="0" />
@@ -19,7 +43,7 @@
 			<imagePainter method="textfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
-	<bind style="ocsStyleTextfield" type="region" key="Textfield" />
+	<bind style="ocsStyleTextfield" type="name" key="DefTextfield" />
 
 	<style id="ocsStylePasswordfield">
 		<insets top="0" left="10" right="10" bottom="0" />
@@ -28,7 +52,7 @@
 			<imagePainter method="PasswordfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
-	<bind style="ocsStylePasswordfield" type="region" key="Passwordfield" />
+	<bind style="ocsStylePasswordfield" type="name" key="DefPasswordfield" />
 
 	<style id="ocsStyleCheckbox">
 		<imageIcon id="check_off" path="/checkbox_off.png" />
@@ -49,6 +73,30 @@
 	</style>
 	<bind style="ocsStylePanel" type="region" key="Panel" />
 
+	<!-- scrollBarStyle -->
+	<style id="ocsStyleScrollBar">
+		<state>
+			<opaque value="TRUE" />
+			<imagePainter method="scrollBarBackground" path="/scrollBar.png" sourceInsets="1 1 4 4" />
+		</state>
+	</style>
+	<bind style="ocsStyleScrollBar" type="region" key="ScrollBar" />
+
+	<style id="ocsStyleScrollBarThumb">
+		<state>
+			<imagePainter method="scrollBarThumbBackground" path="/scrollBarThumb.png" sourceInsets="1 1 1 1" />
+		</state>
+	</style>
+	<bind style="ocsStyleScrollBarThumb" type="region" key="ScrollBarThumb" />
+
+	<style id="ocsStyleScrollBarTrack">
+		<state>
+			<imagePainter method="scrollBarTrackBackground" path="/scrollBarTrack.png" sourceInsets="3 3 3 3" />
+		</state>
+	</style>
+	<bind style="ocsStyleScrollBarTrack" type="region" key="ScrollBarTrack" />
+
+	<!-- tab container -->
 	<style id="ocsStyleTab">
 		<opaque value="TRUE" />
 		<state>
@@ -62,5 +110,7 @@
 			<imagePainter method="tabbedPaneTabBackground" path="/tabSelected.png" sourceInsets="5 5 5 5" />
 		</state>
 	</style>
-	<bind style="ocsStyleTab" type="region" key="tabbedPaneTab"/>
+	<bind style="ocsStyleTab" type="region" key="tabbedPaneTab" />
+
+
 </synth>

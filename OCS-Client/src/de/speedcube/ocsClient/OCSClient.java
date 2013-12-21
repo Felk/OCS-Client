@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.synth.SynthLookAndFeel;
@@ -14,7 +13,7 @@ import de.speedcube.ocsUtilities.packets.*;
 
 public class OCSClient extends JFrame {
 
-	public static final String version = "0";
+	public static final String version = "0.85";
 	public Client client;
 	public PacketLoginSuccess userInfo = null;
 	public boolean disconnected = false;
@@ -114,7 +113,7 @@ public class OCSClient extends JFrame {
 	}
 
 	public void setupWindow() {
-		setTitle(SystemStrings.getString("system.title"));
+		setTitle(SystemStrings.getString("system.title", new String[] { version }));
 		//setLayout(null);
 		setupStyle();
 

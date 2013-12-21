@@ -68,10 +68,12 @@ public class GuiPanelChat extends GuiPanel {
 		chatField = new JTextField();
 		chatField.setBounds(0, 400, 300, 30);
 		chatField.addKeyListener(new ChatKeyListener(this));
+		chatField.setName("ChatTextfield");
 
 		chatButton = new JButton();
 		chatButton.setBounds(300, 400, 100, 30);
-		chatButton.setText("chat");
+		chatButton.setText(SystemStrings.getString("system.label.chat"));
+		chatButton.setName("ChatButton");
 
 		ChatButtonListener chatButtonListener = new ChatButtonListener(this);
 		chatButton.addActionListener(chatButtonListener);

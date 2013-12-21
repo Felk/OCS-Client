@@ -46,28 +46,34 @@ public class GuiPanelLogin extends GuiPanel {
 		//login
 
 		usernameFieldLogin = new JTextField();
+		usernameFieldLogin.setName("DefTextfield");
 		setComponentSize(usernameFieldLogin);
 
 		passwordFieldLogin = new JPasswordField();
+		passwordFieldLogin.setName("DefPasswordfield");
 		setComponentSize(passwordFieldLogin);
 
 		loginButton = new JButton();
 		setComponentSize(loginButton);
 		loginButton.setText(SystemStrings.getString("system.label.login"));
+		loginButton.setName("DefButton");
 		LoginButtonListener loginButtonListener = new LoginButtonListener(client, usernameFieldLogin, passwordFieldLogin, false);
 		loginButton.addActionListener(loginButtonListener);
 
 		//registration
 
 		usernameFieldRegister = new JTextField();
+		usernameFieldRegister.setName("DefTextfield");
 		setComponentSize(usernameFieldRegister);
 
 		passwordFieldRegister = new JPasswordField();
+		passwordFieldRegister.setName("DefPasswordfield");
 		setComponentSize(passwordFieldRegister);
 
 		registerButton = new JButton();
 		setComponentSize(registerButton);
 		registerButton.setText(SystemStrings.getString("system.label.register"));
+		registerButton.setName("DefButton");
 		LoginButtonListener registerButtonListener = new LoginButtonListener(client, usernameFieldRegister, passwordFieldRegister, true);
 		registerButton.addActionListener(registerButtonListener);
 

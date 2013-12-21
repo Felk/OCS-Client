@@ -1,4 +1,4 @@
-system.title=OCS
+system.title=OCS - Beta {1}
 
 system.connecting=verbinde...
 system.connected=verbunden
@@ -6,6 +6,7 @@ system.connection_failed=Verbindung fehlgeschlagen
 system.connection_lost=Verbindung verloren
 system.label.login=einloggen
 system.label.register=registrieren
+system.label.chat=chat
 system.label.activate_sound=sound
 
 system.tab.login=login
