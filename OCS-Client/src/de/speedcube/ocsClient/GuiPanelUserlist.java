@@ -70,7 +70,7 @@ public class GuiPanelUserlist extends GuiPanel {
 				UserInfo userInfo = window.userList.getUserInfoByID(i);
 				if (userInfo != null) {
 					textBuffer.append("<br><span class ='u" + userInfo.userID + "'>" + userInfo.username + "</span>");
-					if (userInfo.rank > Userranks.HIGH) textBuffer.append(" <span class ='rank'>[" + Userranks.getRankString(userInfo.rank) + "]</span>");
+					if (userInfo.rank > Userranks.HIGH) textBuffer.append(" <span class ='rank'>[" + Userranks.getString(userInfo.rank) + "]</span>");
 					String status = escapeHTML(userInfo.status);
 					if (userInfo.status != null && !userInfo.status.equals("")) textBuffer.append(" <span class ='status'>" + (userInfo.rank >= Userranks.HIGH ? setLinks(status) : status) + "</span>");
 				}
