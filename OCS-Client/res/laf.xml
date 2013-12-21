@@ -55,8 +55,8 @@
 	<bind style="ocsStylePasswordfield" type="name" key="DefPasswordfield" />
 
 	<style id="ocsStyleCheckbox">
-		<imageIcon id="check_off" path="/checkbox_off.png" />
-		<imageIcon id="check_on" path="/checkbox_on.png" />
+		<imageIcon id="check_off" path="/Checkbox_off.png" />
+		<imageIcon id="check_on" path="/Checkbox_on.png" />
 		<property key="CheckBox.icon" value="check_off" />
 		<state value="SELECTED">
 			<property key="CheckBox.icon" value="check_on" />
