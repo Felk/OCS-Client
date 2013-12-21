@@ -111,20 +111,22 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void setTextField() {
-		synchronized (chatArea) {
-			StringBuilder textBuffer = new StringBuilder();
-			htmlEditor.setStyleSheet(getTextAreaStyle());
-			chatArea.setDocument(htmlEditor.createDefaultDocument());
-			textBuffer.append("<html>");
+		synchronized (chatScrollPane) {
+			synchronized (chatArea) {
+				StringBuilder textBuffer = new StringBuilder();
+				htmlEditor.setStyleSheet(getTextAreaStyle());
+				chatArea.setDocument(htmlEditor.createDefaultDocument());
+				textBuffer.append("<html>");
 
-			for (String s : chatMessages) {
-				textBuffer.append("<br>");
-				textBuffer.append(s);
+				for (String s : chatMessages) {
+					textBuffer.append("<br>");
+					textBuffer.append(s);
+				}
+				textBuffer.append("</html>");
+
+				chatArea.setText(textBuffer.toString());
+				((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 			}
-			textBuffer.append("</html>");
-
-			chatArea.setText(textBuffer.toString());
-			((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
 	}
 
