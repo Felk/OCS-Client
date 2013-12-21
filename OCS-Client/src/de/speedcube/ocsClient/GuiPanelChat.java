@@ -111,11 +111,13 @@ public class GuiPanelChat extends GuiPanel {
 	}
 
 	public void setTextField() {
+		StringBuilder textBuffer = new StringBuilder();
+		htmlEditor.setStyleSheet(getTextAreaStyle());
+		chatArea.setDocument(htmlEditor.createDefaultDocument());
+
 		synchronized (chatScrollPane) {
 			synchronized (chatArea) {
-				StringBuilder textBuffer = new StringBuilder();
-				htmlEditor.setStyleSheet(getTextAreaStyle());
-				chatArea.setDocument(htmlEditor.createDefaultDocument());
+
 				textBuffer.append("<html>");
 
 				for (String s : chatMessages) {

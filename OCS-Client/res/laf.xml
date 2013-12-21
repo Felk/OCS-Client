@@ -27,11 +27,11 @@
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state value="ENABLED">
 			<color value="#ffffff" type="FOREGROUND" />
-			<imagePainter method="buttonBackground" path="/button.png" sourceInsets="10 10 10 10" />
+			<imagePainter method="buttonBackground" path="/Button.png" sourceInsets="10 10 10 10" />
 		</state>
 
 		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/buttonPressed.png" sourceInsets="10 10 10 10" />
+			<imagePainter method="buttonBackground" path="/ButtonPressed.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
 	<bind style="ocsStyleButton" type="name" key="DefButton" />
@@ -40,7 +40,7 @@
 		<insets top="0" left="10" right="10" bottom="0" />
 		<state value="ENABLED">
 			<color value="#000000" type="FOREGROUND" />
-			<imagePainter method="textfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
+			<imagePainter method="textfieldBackground" path="/Textfield.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
 	<bind style="ocsStyleTextfield" type="name" key="DefTextfield" />
@@ -49,7 +49,7 @@
 		<insets top="0" left="10" right="10" bottom="0" />
 		<state value="ENABLED">
 			<color value="#000000" type="FOREGROUND" />
-			<imagePainter method="PasswordfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
+			<imagePainter method="PasswordfieldBackground" path="/Textfield.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
 	<bind style="ocsStylePasswordfield" type="name" key="DefPasswordfield" />
@@ -77,21 +77,21 @@
 	<style id="ocsStyleScrollBar">
 		<state>
 			<opaque value="TRUE" />
-			<imagePainter method="scrollBarBackground" path="/scrollBar.png" sourceInsets="1 1 4 4" />
+			<imagePainter method="scrollBarBackground" path="/ScrollBar.png" sourceInsets="1 1 4 4" />
 		</state>
 	</style>
 	<bind style="ocsStyleScrollBar" type="region" key="ScrollBar" />
 
 	<style id="ocsStyleScrollBarThumb">
 		<state>
-			<imagePainter method="scrollBarThumbBackground" path="/scrollBarThumb.png" sourceInsets="1 1 1 1" />
+			<imagePainter method="scrollBarThumbBackground" path="/ScrollBarThumb.png" sourceInsets="1 1 1 1" />
 		</state>
 	</style>
 	<bind style="ocsStyleScrollBarThumb" type="region" key="ScrollBarThumb" />
 
 	<style id="ocsStyleScrollBarTrack">
 		<state>
-			<imagePainter method="scrollBarTrackBackground" path="/scrollBarTrack.png" sourceInsets="3 3 3 3" />
+			<imagePainter method="scrollBarTrackBackground" path="/ScrollBarTrack.png" sourceInsets="3 3 3 3" />
 		</state>
 	</style>
 	<bind style="ocsStyleScrollBarTrack" type="region" key="ScrollBarTrack" />
@@ -102,12 +102,12 @@
 		<state>
 			<insets top="0" left="10" right="10" bottom="5" />
 			<font name="Verdana" size="12" />
-			<imagePainter method="tabbedPaneTabBackground" path="/tab.png" sourceInsets="5 5 8 5" />
+			<imagePainter method="tabbedPaneTabBackground" path="/Tab.png" sourceInsets="5 5 8 5" />
 		</state>
 		<state value="SELECTED">
 			<insets top="0" left="10" right="10" bottom="5" />
 			<font name="Verdana" size="12" />
-			<imagePainter method="tabbedPaneTabBackground" path="/tabSelected.png" sourceInsets="5 5 5 5" />
+			<imagePainter method="tabbedPaneTabBackground" path="/TabSelected.png" sourceInsets="5 5 5 5" />
 		</state>
 	</style>
 	<bind style="ocsStyleTab" type="region" key="tabbedPaneTab" />
