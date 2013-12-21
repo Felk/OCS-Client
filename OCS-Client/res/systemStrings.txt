@@ -1,3 +1,5 @@
+system.title=OCS
+
 system.connecting=verbinde...
 system.connected=verbunden
 system.connection_failed=Verbindung fehlgeschlagen
@@ -5,12 +7,20 @@ system.connection_lost=Verbindung verloren
 system.label.login=einloggen
 system.label.register=registrieren
 system.label.activate_sound=sound
-system.title=OCS
+
+system.tab.login=login
+system.tab.logout=logout
+system.tab.chat=Chat
+system.tab.profile=Profile
+system.tab.settings=Einstellungen
+
+system.msg.logout=Du wurdest ausgeloggt
 
 reg.username_invalid=ungültiger Benutzername
 reg.username_taken=Name existiert bereits
 reg.success={1} erfolgreich registriert
 
+login.fail=Login fehlgeschlagen
 login.fail_username=Falscher Benutzername
 login.fail_password=Falsches Passwort
 
@@ -19,3 +29,10 @@ chat.command.unknown=Unbekannter Befehl {1}
 
 chat.login={1} hat sich eingeloggt
 chat.logout={1} hat sich ausgeloggt
+
+party.join.fail.not_existent=Diese Party existiert nicht
+party.join_fail.running=Party läuft bereits
+party.join_fail.already_in_party=Du bist bereits in der Party
+party.time_fail.not_existent=Fehler beim Übertragen der Zeit
+party.time_fail.not_running=Party läuft nicht
+party.time_fail.not_in_party=Du bist nicht in der Party

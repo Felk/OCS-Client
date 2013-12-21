@@ -1,8 +1,6 @@
 package de.speedcube.ocsClient;
 
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -128,17 +126,13 @@ public class GuiPanelLogin extends GuiPanel {
 			if (p instanceof PacketLoginError) {
 				setAlertText(SystemStrings.getString(((PacketLoginError) p).msg));
 			} else if (p instanceof PacketLogout) {
-				window.removeAllGuis();
-				window.loginPanel.setAlertText(((PacketLogout) p).msg);
-				System.out.println(((PacketLogout) p).msg);
-				window.addGui(this);
+				window.tabContainer.disableTabs();
+				window.loginPanel.setAlertText(SystemStrings.getString(((PacketLogout) p).msg));
 			} else if (p instanceof PacketRegistrationError) {
-				window.removeAllGuis();
-				window.addGui(window.loginPanel);
+				window.tabContainer.disableTabs();
 				window.loginPanel.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
 			} else if (p instanceof PacketRegistrationSuccess) {
-				window.removeAllGuis();
-				window.addGui(window.loginPanel);
+				//window.tabContainer.disableTabs();
 				window.loginPanel.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
 			}
 		}

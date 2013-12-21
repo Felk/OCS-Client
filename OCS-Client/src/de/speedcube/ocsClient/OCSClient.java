@@ -1,11 +1,13 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Color;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.*;
@@ -25,6 +27,9 @@ public class OCSClient extends JFrame {
 	public GuiPanelLogin loginPanel;
 	public GuiPanelUserlist userlistPanel;
 	public GuiPanelTimer timerPanel;
+	public GuiPanelChatContainer chatPanelContainer;
+
+	public GuiTabContainer tabContainer;
 
 	public OCSClient(String adress) {
 		receiveNotify = new Object();
@@ -73,10 +78,7 @@ public class OCSClient extends JFrame {
 					client.sendPacket(passwordPacket);
 				} else if (p instanceof PacketLoginSuccess) {
 					userInfo = (PacketLoginSuccess) p;
-					removeAllGuis();
-					addGui(chatPanel);
-					addGui(userlistPanel);
-					addGui(timerPanel);
+					tabContainer.enableTabs();
 				} else if (p instanceof PacketUserlist) {
 					userlistPanel.updateUserlist((PacketUserlist) p);
 				} else if (p instanceof PacketUserInfo) {
@@ -93,40 +95,38 @@ public class OCSClient extends JFrame {
 			chatPanel.processPackets();
 
 			if (!client.connected) {
-				removeAllGuis();
-				addGui(loginPanel);
+				tabContainer.disableTabs();
 				loginPanel.enableButtons(false);
 				if (!disconnected) loginPanel.setAlertText(SystemStrings.getString("system.connection_lost"));
 			}
 		}
 	}
 
-	public void removeAllGuis() {
-		remove(loginPanel);
-		remove(chatPanel);
-		remove(userlistPanel);
-		remove(timerPanel);
-	}
+	private void setupStyle() {
 
-	public void addGui(GuiPanel gui) {
-		add(gui);
-		validate();
-		repaint();
+		try {
+			SynthLookAndFeel laf = new SynthLookAndFeel();
+			laf.load(getClass().getResourceAsStream("/laf.xml"), getClass());
+			UIManager.setLookAndFeel(laf);
+		} catch (ParseException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setupWindow() {
 		setTitle(SystemStrings.getString("system.title"));
-		setLayout(null);
+		//setLayout(null);
+		setupStyle();
 
 		//set OS style
-		try {
+		/*try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		setSize(820, 600);
-		getContentPane().setBackground(Color.decode("#444444"));
+
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -135,11 +135,12 @@ public class OCSClient extends JFrame {
 		userlistPanel = new GuiPanelUserlist(client, this);
 		chatPanel = new GuiPanelChat(client, this);
 		timerPanel = new GuiPanelTimer(client, this);
+		chatPanelContainer = new GuiPanelChatContainer(this, chatPanel, userlistPanel);
 
-		add(loginPanel);
-		/*add(chatPanel);
-		add(userlistPanel);
-		add(timerPanel);*/
+		tabContainer = new GuiTabContainer(this, loginPanel, chatPanelContainer);
+
+		add(tabContainer);
+
 		validate();
 		repaint();
 	}

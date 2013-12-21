@@ -1,0 +1,66 @@
+<synth>
+	<style id="ocsStyleButton">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state value="ENABLED">
+			<color value="#ffffff" type="FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/button.png" sourceInsets="10 10 10 10" />
+		</state>
+
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground" path="/buttonPressed.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStyleButton" type="region" key="button" />
+
+	<style id="ocsStyleTextfield">
+		<insets top="0" left="10" right="10" bottom="0" />
+		<state value="ENABLED">
+			<color value="#000000" type="FOREGROUND" />
+			<imagePainter method="textfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStyleTextfield" type="region" key="Textfield" />
+
+	<style id="ocsStylePasswordfield">
+		<insets top="0" left="10" right="10" bottom="0" />
+		<state value="ENABLED">
+			<color value="#000000" type="FOREGROUND" />
+			<imagePainter method="PasswordfieldBackground" path="/textfield.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStylePasswordfield" type="region" key="Passwordfield" />
+
+	<style id="ocsStyleCheckbox">
+		<imageIcon id="check_off" path="/checkbox_off.png" />
+		<imageIcon id="check_on" path="/checkbox_on.png" />
+		<property key="CheckBox.icon" value="check_off" />
+		<state value="SELECTED">
+			<property key="CheckBox.icon" value="check_on" />
+		</state>
+	</style>
+	<bind style="ocsStyleCheckbox" type="region" key="Checkbox" />
+
+	<style id="ocsStylePanel">
+		<state>
+			<opaque value="TRUE" />
+			<color value="#444444" type="BACKGROUND" />
+			<color value="#ffffff" type="FOREGROUND" />
+		</state>
+	</style>
+	<bind style="ocsStylePanel" type="region" key="Panel" />
+
+	<style id="ocsStyleTab">
+		<opaque value="TRUE" />
+		<state>
+			<insets top="0" left="10" right="10" bottom="5" />
+			<font name="Verdana" size="12" />
+			<imagePainter method="tabbedPaneTabBackground" path="/tab.png" sourceInsets="5 5 8 5" />
+		</state>
+		<state value="SELECTED">
+			<insets top="0" left="10" right="10" bottom="5" />
+			<font name="Verdana" size="12" />
+			<imagePainter method="tabbedPaneTabBackground" path="/tabSelected.png" sourceInsets="5 5 5 5" />
+		</state>
+	</style>
+	<bind style="ocsStyleTab" type="region" key="tabbedPaneTab"/>
+</synth>
