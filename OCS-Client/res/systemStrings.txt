@@ -27,6 +27,7 @@ login.fail_password=Falsches Passwort
 
 chat.command.insufficient_rank=Nicht genügend Rechte für den Befehl {1}
 chat.command.unknown=Unbekannter Befehl {1}
+chat.whisper_invalid_user=Unbekannter Benutzername
 
 chat.login={1} hat sich eingeloggt
 chat.logout={1} hat sich ausgeloggt

@@ -35,7 +35,9 @@ public class OCSClient extends JFrame {
 
 		client = new Client();
 
+		userList = new UserList();
 		setupWindow();
+
 		loginPanel.enableButtons(false);
 		loginPanel.setAlertText(SystemStrings.getString("system.connecting"));
 		client.connect(adress, 34543, receiveNotify);
@@ -47,8 +49,6 @@ public class OCSClient extends JFrame {
 			loginPanel.setAlertText(SystemStrings.getString("system.connection_failed"));
 			return;
 		}
-
-		userList = new UserList();
 
 		boolean running = true;
 
@@ -83,7 +83,7 @@ public class OCSClient extends JFrame {
 				} else if (p instanceof PacketUserInfo) {
 					userList.addUsers((PacketUserInfo) p);
 					userlistPanel.updateUserlist();
-					chatPanel.setTextField();
+					chatPanel.updateChatAreasContent();
 				} else if (p instanceof PacketDisconnect) {
 					loginPanel.setAlertText(((PacketDisconnect) p).msg);
 					disconnected = true;

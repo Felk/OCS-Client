@@ -56,6 +56,7 @@ public class GuiPanelUserlist extends GuiPanel {
 	}
 
 	public void updateUserlist(PacketUserlist userlistPacket) {
+		if (userlistPacket == null) return;
 		this.userlistPacket = userlistPacket;
 
 		synchronized (userlist) {
@@ -79,6 +80,7 @@ public class GuiPanelUserlist extends GuiPanel {
 			userlist.setText(textBuffer.toString());
 			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
+
 	}
 
 	/*public String getTextAreaStyle() {

@@ -1,20 +1,16 @@
 package de.speedcube.ocsClient;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.DefaultCaret;
-import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.TabExpander;
 
+import de.speedcube.ocsClient.chat.ChatHistory;
 import de.speedcube.ocsClient.network.Client;
 import de.speedcube.ocsUtilities.packets.Packet;
+import de.speedcube.ocsUtilities.packets.PacketChannelEnter;
 import de.speedcube.ocsUtilities.packets.PacketChat;
 import de.speedcube.ocsUtilities.packets.PacketChatBroadcast;
 import de.speedcube.ocsUtilities.packets.PacketSystemMessage;
@@ -22,9 +18,9 @@ import de.speedcube.ocsUtilities.packets.PacketSystemMessage;
 public class GuiPanelChat extends GuiPanel {
 
 	private Client client;
-	public JEditorPane chatArea;
-	private HTMLEditorKit htmlEditor;
-	public JScrollPane chatScrollPane;
+	public JTabbedPane chatTabs;
+	public ArrayList<ChatHistory> chatAreas;
+
 	public JTextField chatField;
 	public JButton chatButton;
 	public JCheckBox soundCheckbox;
@@ -42,28 +38,9 @@ public class GuiPanelChat extends GuiPanel {
 		setLayout(null);
 
 		setBounds(0, 0, 400, 450);
-
-		chatArea = new JEditorPane();
-		chatArea.setBounds(0, 0, 400, 400);
-		chatArea.setEditable(false);
-		htmlEditor = new HTMLEditorKit();
-		chatArea.setEditorKit(htmlEditor);
+		chatAreas = new ArrayList<ChatHistory>();
 
 		//link listener to open links
-		chatArea.addHyperlinkListener(new HyperlinkListener() {
-			public void hyperlinkUpdate(HyperlinkEvent e) {
-				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-					try {
-						Desktop.getDesktop().browse(e.getURL().toURI());
-					} catch (IOException | URISyntaxException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
-
-		chatScrollPane = new JScrollPane(chatArea);
-		chatScrollPane.setBounds(chatArea.getBounds());
 
 		chatField = new JTextField();
 		chatField.setBounds(0, 400, 300, 30);
@@ -82,54 +59,17 @@ public class GuiPanelChat extends GuiPanel {
 		soundCheckbox.setBounds(0, 430, 300, 20);
 		soundCheckbox.setSelected(true);
 
-		add(chatScrollPane);
+		chatTabs = new JTabbedPane();
+		chatTabs.setBounds(0, 0, 400, 400);
+
+		add(chatTabs);
 		add(chatField);
 		add(chatButton);
 		add(soundCheckbox);
 
 		genTextAreaStyle(window.userList);
-		chatArea.setText("<html>" + getTextAreaStyle() + "<body>willkommen im OCS 1.0</body></html>");
+		//chatArea.setText("<html>" + getTextAreaStyle() + "<body>willkommen im OCS 1.0</body></html>");
 		validate();
-	}
-
-	public void addChatMessage(PacketChatBroadcast message) {
-		SimpleDateFormat chatTime = new SimpleDateFormat("H:mm");
-		String timeString = chatTime.format(new Date(message.timestamp));
-		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='u" + message.userId + "'>" + window.userList.getUserNameByID(message.userId) + "</span> - " + setLinks(escapeHTML(message.text)));
-		setTextField();
-		if (message.userId != window.userInfo.userID && soundCheckbox.isSelected()) {
-			newMsgSound.play();
-		}
-	}
-
-	public void addSystemMessage(PacketSystemMessage message) {
-		SimpleDateFormat chatTime = new SimpleDateFormat("H:mm");
-		String timeString = chatTime.format(new Date(message.timestamp));
-		chatMessages.add("<span class ='time'>" + timeString + "</span>  <span class ='system'>" + SystemStrings.getString(message.msg, message.values) + "</span>");
-		setTextField();
-		if (soundCheckbox.isSelected()) newMsgSound.play();
-	}
-
-	public void setTextField() {
-		StringBuilder textBuffer = new StringBuilder();
-		htmlEditor.setStyleSheet(getTextAreaStyle());
-		chatArea.setDocument(htmlEditor.createDefaultDocument());
-
-		synchronized (chatScrollPane) {
-			synchronized (chatArea) {
-
-				textBuffer.append("<html>");
-
-				for (String s : chatMessages) {
-					textBuffer.append("<br>");
-					textBuffer.append(s);
-				}
-				textBuffer.append("</html>");
-
-				chatArea.setText(textBuffer.toString());
-				((DefaultCaret) chatArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-			}
-		}
 	}
 
 	public void processPackets() {
@@ -137,10 +77,54 @@ public class GuiPanelChat extends GuiPanel {
 
 		for (Packet p : packets) {
 			if (p instanceof PacketChatBroadcast) {
-				addChatMessage((PacketChatBroadcast) p);
+				ChatHistory ch = getChatChannel(((PacketChatBroadcast) p).chatChannel);
+				if (ch != null) {
+					ch.addChatMessage((PacketChatBroadcast) p, window.userInfo.userID, soundCheckbox.isSelected(), newMsgSound);
+				}
 			} else if (p instanceof PacketSystemMessage) {
-				addSystemMessage((PacketSystemMessage) p);
+				if (((PacketSystemMessage) p).global) {
+					for (ChatHistory ch : chatAreas) {
+						ch.addSystemMessage((PacketSystemMessage) p, soundCheckbox.isSelected(), newMsgSound);
+					}
+				} else {
+					ChatHistory ch = getChatChannel(((PacketSystemMessage) p).chatChannel);
+					if (ch != null) {
+						ch.addSystemMessage((PacketSystemMessage) p, soundCheckbox.isSelected(), newMsgSound);
+					}
+				}
+			} else if (p instanceof PacketChannelEnter) {
+				for (ChatHistory ch : chatAreas) {
+					if (ch.name.equals(((PacketChannelEnter) p).chatChannel)) return;
+				}
+				addChatChannel((PacketChannelEnter) p);
 			}
+		}
+	}
+
+	public void addChatChannel(PacketChannelEnter channelEnterPacket) {
+		chatAreas.add(new ChatHistory(channelEnterPacket.chatChannel, window.userList));
+		updateChatAreasTabs();
+	}
+
+	private ChatHistory getChatChannel(String name) {
+		for (ChatHistory ch : chatAreas) {
+			if (ch.name.equals(name)) return ch;
+		}
+		return null;
+	}
+
+	public void updateChatAreasTabs() {
+		while (chatTabs.getTabCount() > 0) {
+			chatTabs.remove(0);
+		}
+		for (ChatHistory ch : chatAreas) {
+			chatTabs.addTab(ch.name, ch.chatArea);
+		}
+	}
+
+	public void updateChatAreasContent() {
+		for (ChatHistory ch : chatAreas) {
+			ch.setTextField();
 		}
 	}
 
@@ -148,8 +132,9 @@ public class GuiPanelChat extends GuiPanel {
 		if (!chatField.getText().equals("")) {
 			PacketChat chatPacket = new PacketChat();
 			chatPacket.text = chatField.getText();
-			chatField.setText("");
+			chatPacket.chatChannel = chatAreas.get(chatTabs.getSelectedIndex()).name;
 
+			chatField.setText("");
 			client.sendPacket(chatPacket);
 		}
 	}
