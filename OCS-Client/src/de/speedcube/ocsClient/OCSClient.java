@@ -13,6 +13,8 @@ import de.speedcube.ocsUtilities.packets.*;
 
 public class OCSClient extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String version = "0.85.1";
 	public Client client;
 	public PacketLoginSuccess userInfo = null;
@@ -27,6 +29,7 @@ public class OCSClient extends JFrame {
 	public GuiPanelUserlist userlistPanel;
 	public GuiPanelTimer timerPanel;
 	public GuiPanelChatContainer chatPanelContainer;
+	public GuiPanelPartyContainer partyContainer;
 
 	public GuiTabContainer tabContainer;
 
@@ -92,6 +95,7 @@ public class OCSClient extends JFrame {
 
 			loginPanel.processPackets();
 			chatPanel.processPackets();
+			partyContainer.processPackets();
 
 			if (!client.connected) {
 				tabContainer.disableTabs();
@@ -128,17 +132,23 @@ public class OCSClient extends JFrame {
 
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		setVisible(true);
 
 		loginPanel = new GuiPanelLogin(client, this);
 		userlistPanel = new GuiPanelUserlist(client, this);
 		chatPanel = new GuiPanelChat(client, this);
 		timerPanel = new GuiPanelTimer(client, this);
-		chatPanelContainer = new GuiPanelChatContainer(this, chatPanel, userlistPanel);
+		partyContainer = new GuiPanelPartyContainer(client, this);
+
+		chatPanelContainer = new GuiPanelChatContainer(this, chatPanel, userlistPanel, partyContainer);
 
 		tabContainer = new GuiTabContainer(this, loginPanel, chatPanelContainer);
 
 		add(tabContainer);
+		//add(chatPanelContainer);
+		//add(partyContainer);
+		//add(new GuiPartyGeneral());
 
 		validate();
 		repaint();

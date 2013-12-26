@@ -8,6 +8,8 @@ import de.speedcube.ocsUtilities.packets.PacketLogout;
 
 public class GuiTabContainer extends GuiPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public OCSClient window;
 	public GuiPanelLogin loginPanel;
 	public GuiPanelChatContainer chatContainer;
@@ -21,9 +23,9 @@ public class GuiTabContainer extends GuiPanel {
 		this.chatContainer = chatContainer;
 
 		setLayout(null);
-		setName("guiContainer");
-		
+
 		tabbedPane = new JTabbedPane();
+		tabbedPane.setName("guiContainer");
 		tabbedPane.setBounds(0, 0, window.getWidth(), window.getHeight());
 		tabbedPane.addTab(SystemStrings.getString("system.tab.login"), loginPanel);
 
@@ -34,7 +36,7 @@ public class GuiTabContainer extends GuiPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (tabbedPane.getSelectedIndex() == 0) {
-					disableTabs();
+					sendLogout();
 				}
 			}
 		});
@@ -52,6 +54,9 @@ public class GuiTabContainer extends GuiPanel {
 		tabbedPane.setTitleAt(0, SystemStrings.getString("system.tab.login"));
 		tabbedPane.remove(chatContainer);
 		tabsEnabled = false;
+	}
+
+	public void sendLogout() {
 		window.client.sendPacket(new PacketLogout());
 	}
 }

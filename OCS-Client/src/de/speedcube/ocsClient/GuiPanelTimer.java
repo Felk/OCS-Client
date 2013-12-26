@@ -13,6 +13,8 @@ import de.speedcube.ocsClient.network.Client;
 
 public class GuiPanelTimer extends GuiPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	private Client client;
 	public JLabel timerLabel;
 

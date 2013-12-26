@@ -6,6 +6,9 @@ import javax.swing.text.html.StyleSheet;
 import de.speedcube.ocsUtilities.UserInfo;
 
 public abstract class GuiPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
 	private static StyleSheet style;
 
 	public static void genTextAreaStyle(UserList userList) {

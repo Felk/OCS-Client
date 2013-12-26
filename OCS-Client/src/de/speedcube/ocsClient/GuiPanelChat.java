@@ -3,9 +3,6 @@ package de.speedcube.ocsClient;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.TabExpander;
 
 import de.speedcube.ocsClient.chat.ChatHistory;
 import de.speedcube.ocsClient.network.Client;
@@ -16,6 +13,8 @@ import de.speedcube.ocsUtilities.packets.PacketChatBroadcast;
 import de.speedcube.ocsUtilities.packets.PacketSystemMessage;
 
 public class GuiPanelChat extends GuiPanel {
+
+	private static final long serialVersionUID = 1L;
 
 	private Client client;
 	public JTabbedPane chatTabs;
@@ -37,7 +36,7 @@ public class GuiPanelChat extends GuiPanel {
 
 		setLayout(null);
 
-		setBounds(0, 0, 400, 450);
+		setBounds(0, 0, 400, 500);
 		chatAreas = new ArrayList<ChatHistory>();
 
 		//link listener to open links
@@ -61,6 +60,7 @@ public class GuiPanelChat extends GuiPanel {
 
 		chatTabs = new JTabbedPane();
 		chatTabs.setBounds(0, 0, 400, 400);
+		chatTabs.setName("ChatChannelTabs");
 
 		add(chatTabs);
 		add(chatField);

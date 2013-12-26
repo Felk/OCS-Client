@@ -1,7 +1,6 @@
 package de.speedcube.ocsClient.chat;
 
 import java.awt.Desktop;
-import java.awt.Window;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;

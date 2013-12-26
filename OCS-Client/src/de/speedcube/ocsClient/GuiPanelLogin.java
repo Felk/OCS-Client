@@ -19,6 +19,8 @@ import de.speedcube.ocsUtilities.packets.PacketRegistrationSuccess;
 
 public class GuiPanelLogin extends GuiPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public JLabel alertLabel;
 	private Client client;
 	private OCSClient window;

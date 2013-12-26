@@ -18,6 +18,8 @@ import de.speedcube.ocsUtilities.packets.PacketUserlist;
 
 public class GuiPanelUserlist extends GuiPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public JEditorPane userlist;
 	private HTMLEditorKit htmlEditor;
 	public JScrollPane userlistScrollPane;
