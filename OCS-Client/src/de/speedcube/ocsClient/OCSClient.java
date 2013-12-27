@@ -1,11 +1,11 @@
 package de.speedcube.ocsClient;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import de.speedcube.ocsClient.network.Client;
@@ -118,15 +118,8 @@ public class OCSClient extends JFrame {
 
 	public void setupWindow() {
 		setTitle(SystemStrings.getString("system.title", new String[] { version }));
-		//setLayout(null);
-		setupStyle();
 
-		//set OS style
-		/*try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}*/
+		setupStyle();
 
 		setSize(820, 600);
 
@@ -146,9 +139,6 @@ public class OCSClient extends JFrame {
 		tabContainer = new GuiTabContainer(this, loginPanel, chatPanelContainer);
 
 		add(tabContainer);
-		//add(chatPanelContainer);
-		//add(partyContainer);
-		//add(new GuiPartyGeneral());
 
 		validate();
 		repaint();

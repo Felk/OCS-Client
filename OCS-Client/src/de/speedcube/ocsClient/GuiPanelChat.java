@@ -118,7 +118,7 @@ public class GuiPanelChat extends GuiPanel {
 			chatTabs.remove(0);
 		}
 		for (ChatHistory ch : chatAreas) {
-			chatTabs.addTab(ch.name, ch.chatArea);
+			chatTabs.addTab(ch.name, ch.chatScrollPane);
 		}
 	}
 

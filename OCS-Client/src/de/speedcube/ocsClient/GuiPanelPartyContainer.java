@@ -47,7 +47,7 @@ public class GuiPanelPartyContainer extends GuiPanel {
 				PacketPartyData ppd = (PacketPartyData) p;
 				Party tempParty = parties.get(ppd.partyID);
 				if (tempParty == null) {
-					parties.put(ppd.partyID, new Party(ppd.partyID, ppd.ownerID, ppd.type, ppd.rounds, ppd.rounds_counting, ppd.name, ppd.results, window.userList, client));
+					parties.put(ppd.partyID, new Party(ppd.partyID, ppd.ownerID, ppd.type, ppd.rounds, ppd.rounds_counting, ppd.name, ppd.results, ppd.state, window.userList, client));
 				} else {
 					tempParty.ownerID = ppd.ownerID;
 					tempParty.type = ppd.type;
@@ -57,7 +57,8 @@ public class GuiPanelPartyContainer extends GuiPanel {
 					tempParty.results = ppd.results;
 				}
 				generalPartyGui.updatePartyDisplay(partyIDs, parties);
-				partyGui.updatePartyDisplay(currentParty);
+				partyGui.setActiveParty(currentParty);
+				partyGui.updatePartyDisplay();
 			} else if (p instanceof PacketPartyJoin) {
 				currentParty = parties.get(((PacketPartyJoin) p).partyID);
 				openPartyGui();

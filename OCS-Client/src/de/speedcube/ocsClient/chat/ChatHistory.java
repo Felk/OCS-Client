@@ -23,8 +23,8 @@ public class ChatHistory {
 	public ArrayList<Message> messages;
 
 	public String name;
-	public UserList userList;
-	public JEditorPane chatArea;
+	private UserList userList;
+	private JEditorPane chatArea;
 	private HTMLEditorKit htmlEditor;
 	public JScrollPane chatScrollPane;
 

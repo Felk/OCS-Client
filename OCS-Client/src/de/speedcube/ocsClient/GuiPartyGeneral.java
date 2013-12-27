@@ -68,7 +68,9 @@ public class GuiPartyGeneral extends GuiPanel {
 				partiesContainer.add(tempParty.nameLabel);
 
 				tempParty.joinButton.setBounds(0, i * 20, 20, 20);
-				partiesContainer.add(tempParty.joinButton);
+				if (tempParty.isOpen()) {
+					partiesContainer.add(tempParty.joinButton);
+				}
 			}
 		}
 		validate();

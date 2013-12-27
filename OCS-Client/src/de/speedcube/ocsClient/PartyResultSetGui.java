@@ -23,7 +23,13 @@ public class PartyResultSetGui {
 	private void recalcLabel() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(userlist.getUserNameByID(resultSet.getUserID()));
-		sb.append(" - ");
+		sb.append(" ; ");
+		if (resultSet.getTimes() != null) {
+			for (int time : resultSet.getTimes()) {
+				sb.append(time + ";");
+			}
+		}
+
 		sb.append(resultSet.getAverage());
 		userLabel.setText(sb.toString());
 	}

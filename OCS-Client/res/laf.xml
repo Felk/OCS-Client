@@ -15,7 +15,7 @@
 
 	<style id="ocsStyleButton">
 		<insets top="0" left="0" right="0" bottom="0" />
-		<state value="ENABLED">
+		<state>
 			<color value="#ffffff" type="FOREGROUND" />
 			<imagePainter method="buttonBackground" path="/Button.png" sourceInsets="10 10 10 10" />
 		</state>
@@ -58,21 +58,29 @@
 	
 	<!-- tab container -->
 
-	<style id="ocsStyleTab">
-		<opaque value="TRUE" />
-		<state>
-			<insets top="0" left="10" right="10" bottom="5" />
-			<font name="Verdana" size="12" />
-			<imagePainter method="tabbedPaneTabBackground" path="/Tab.png" sourceInsets="5 5 8 5" />
-		</state>
+	<synth>
+		<style id="ocsStyleTab">
+			<opaque value="TRUE" />
+			<state>
+				<insets top="0" left="10" right="10" bottom="5" />
+				<font name="Arial" size="12" />
+			</state>
+		</style>
+		<bind style="ocsStyleTab" type="region" key="TabbedPaneTab" />
+	</synth>
 
-		<state value="SELECTED">
-			<insets top="0" left="10" right="10" bottom="5" />
-			<font name="Verdana" size="12" />
-			<imagePainter method="tabbedPaneTabBackground" path="/TabSelected.png" sourceInsets="5 5 5 5" />
-		</state>
-	</style>
-	<bind style="ocsStyleTab" type="region" key="tabbedPaneTab" />
+	<synth>
+		<style id="ocsStyleTabContainer">
+			<opaque value="TRUE" />
+			<state>
+				<imagePainter method="TabbedPaneTabBackground" path="/Tab.png" sourceInsets="5 5 5 5" />
+			</state>
+			<state value="SELECTED">
+				<imagePainter method="TabbedPaneTabBackground" path="/TabSelected.png" sourceInsets="5 5 5 5" />
+			</state>
+		</style>
+		<bind style="ocsStyleTabContainer" type="name" key="guiContainer" />
+	</synth>
 
 
 
@@ -80,7 +88,7 @@
 
 	<style id="ocsStyleChatButton">
 		<insets top="0" left="0" right="0" bottom="0" />
-		<state value="ENABLED">
+		<state>
 			<color value="#ffffff" type="FOREGROUND" />
 			<imagePainter method="buttonBackground" path="/ChatButton.png" sourceInsets="10 10 10 10" />
 		</state>
@@ -100,13 +108,27 @@
 	</style>
 	<bind style="ocsStyleChatTextfield" type="name" key="ChatTextfield" />
 
+	<synth>
+		<style id="ocsStyleChatTab">
+			<opaque value="TRUE" />
+			<state>
+				<imagePainter method="TabbedPaneTabBackground" path="/ChatTab.png" sourceInsets="5 5 5 5" />
+			</state>
+			<state value="SELECTED">
+				<imagePainter method="TabbedPaneTabBackground" path="/ChatTabSelected.png" sourceInsets="5 5 5 5" />
+			</state>
+		</style>
+		<bind style="ocsStyleChatTab" type="name" key="ChatChannelTabs" />
+
+	</synth>
+
 
 
 	<!-- Party style -->
 
 	<style id="ocsStylePartyJoinButton">
 		<insets top="0" left="0" right="0" bottom="0" />
-		<state value="ENABLED">
+		<state>
 			<color value="#ffffff" type="FOREGROUND" />
 			<imagePainter method="buttonBackground" path="/PartyJoinButton.png" sourceInsets="8 8 8 8" />
 		</state>
@@ -142,4 +164,19 @@
 		</state>
 	</style>
 	<bind style="ocsStyleScrollBarTrack" type="region" key="ScrollBarTrack" />
+
+
+
+	<!-- comboBoxStyle -->
+
+	<style id="ocsComboboxArrowStyle">
+		<imagePainter method="arrowButtonForeground" path="/ArrowButton.png" sourceInsets="0 0 0 0" stretch="false" direction="south" />
+	</style>
+	<bind style="ocsComboboxArrowStyle" type="name" key="ComboBox.arrowButton" />
+
+	<style id="ocsComboboxStyle">
+		<insets top="0" left="10" right="0" bottom="0" />
+		<imagePainter method="ComboBoxBackground" path="/Button.png" sourceInsets="8 8 8 8" />
+	</style>
+	<bind style="ocsComboboxStyle" type="region" key="ComboBox" />
 </synth>
