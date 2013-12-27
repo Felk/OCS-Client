@@ -55,6 +55,7 @@ public class GuiPanelPartyContainer extends GuiPanel {
 					tempParty.rounds_counting = ppd.rounds_counting;
 					tempParty.name = ppd.name;
 					tempParty.results = ppd.results;
+					tempParty.state = ppd.state;
 				}
 				generalPartyGui.updatePartyDisplay(partyIDs, parties);
 				partyGui.setActiveParty(currentParty);
