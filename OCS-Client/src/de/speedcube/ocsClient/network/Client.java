@@ -76,6 +76,10 @@ public class Client {
 		return receiver.getData(channel);
 	}
 
+	public boolean isDataAvailable() {
+		return receiver.isDataAvailable();
+	}
+
 	public String getAdress() {
 		if (socket != null) { return socket.getInetAddress().getHostAddress() + ":" + socket.getPort(); }
 		return "";

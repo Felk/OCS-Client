@@ -1,23 +1,21 @@
-package de.speedcube.ocsClient;
+package de.speedcube.ocsClient.gui;
 
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import de.speedcube.ocsUtilities.packets.PacketLogout;
+import de.speedcube.ocsClient.SystemStrings;
 
 public class GuiTabContainer extends GuiPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public OCSClient window;
-	public GuiPanelLogin loginPanel;
-	public GuiPanelChatContainer chatContainer;
+	public OCSWindow window;
+	public GuiTabLogin loginPanel;
+	public GuiTabChat chatContainer;
 	public boolean tabsEnabled;
 
 	public JTabbedPane tabbedPane;
 
-	public GuiTabContainer(OCSClient window, GuiPanelLogin loginPanel, GuiPanelChatContainer chatContainer) {
+	public GuiTabContainer(OCSWindow window, GuiTabLogin loginPanel, GuiTabChat chatContainer) {
 		this.window = window;
 		this.loginPanel = loginPanel;
 		this.chatContainer = chatContainer;
@@ -31,15 +29,7 @@ public class GuiTabContainer extends GuiPanel {
 
 		add(tabbedPane);
 
-		tabbedPane.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (tabbedPane.getSelectedIndex() == 0) {
-					sendLogout();
-				}
-			}
-		});
+		
 	}
 
 	public void enableTabs() {
@@ -56,7 +46,5 @@ public class GuiTabContainer extends GuiPanel {
 		tabsEnabled = false;
 	}
 
-	public void sendLogout() {
-		window.client.sendPacket(new PacketLogout());
-	}
+
 }

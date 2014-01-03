@@ -1,8 +1,9 @@
-package de.speedcube.ocsClient;
+package de.speedcube.ocsClient.gui;
 
 import javax.swing.JPanel;
 import javax.swing.text.html.StyleSheet;
 
+import de.speedcube.ocsClient.UserList;
 import de.speedcube.ocsUtilities.UserInfo;
 
 public abstract class GuiPanel extends JPanel {

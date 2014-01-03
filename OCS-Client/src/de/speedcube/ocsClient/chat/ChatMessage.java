@@ -1,7 +1,7 @@
 package de.speedcube.ocsClient.chat;
 
-import de.speedcube.ocsClient.GuiPanel;
-import de.speedcube.ocsClient.UserList;
+import de.speedcube.ocsClient.OCSClient;
+import de.speedcube.ocsClient.gui.GuiPanel;
 
 public class ChatMessage extends Message {
 	public int userID;
@@ -12,7 +12,7 @@ public class ChatMessage extends Message {
 	}
 
 	@Override
-	public String toString(UserList userlist) {
-		return ("<span class ='time'>" + timestampToString(timestamp) + "</span>  <span class ='u" + userID + "'>" + userlist.getUserNameByID(userID) + "</span> - " + GuiPanel.setLinks(GuiPanel.escapeHTML(message)));
+	public String toString() {
+		return ("<span class ='time'>" + timestampToString(timestamp) + "</span>  <span class ='u" + userID + "'>" + OCSClient.userList.getUserNameByID(userID) + "</span> - " + GuiPanel.setLinks(GuiPanel.escapeHTML(message)));
 	}
 }

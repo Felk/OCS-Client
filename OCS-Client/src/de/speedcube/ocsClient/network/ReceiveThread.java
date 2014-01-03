@@ -79,6 +79,10 @@ public class ReceiveThread extends Thread {
 		}
 	}
 
+	public boolean isDataAvailable() {
+		return data.size() > 0;
+	}
+
 	public void stopThread() {
 		connectionClosed = true;
 	}

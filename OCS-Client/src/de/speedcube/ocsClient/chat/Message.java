@@ -3,8 +3,6 @@ package de.speedcube.ocsClient.chat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import de.speedcube.ocsClient.UserList;
-
 public abstract class Message {
 	public long timestamp;
 	public String message;
@@ -19,5 +17,5 @@ public abstract class Message {
 		return chatTime.format(new Date(timestamp));
 	}
 
-	public abstract String toString(UserList userlist);
+	public abstract String toString();
 }

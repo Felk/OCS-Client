@@ -7,7 +7,7 @@ import de.speedcube.ocsUtilities.UserInfo;
 import de.speedcube.ocsUtilities.packets.PacketUserInfo;
 
 public class UserList {
-	HashMap<Integer, UserInfo> usersMap;
+	public HashMap<Integer, UserInfo> usersMap;
 
 	public UserList() {
 		usersMap = new HashMap<Integer, UserInfo>();

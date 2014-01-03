@@ -1,66 +1,59 @@
 package de.speedcube.ocsClient;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.plaf.synth.SynthLookAndFeel;
-
+import de.speedcube.ocsClient.gui.OCSWindow;
 import de.speedcube.ocsClient.network.Client;
-import de.speedcube.ocsUtilities.packets.*;
+import de.speedcube.ocsUtilities.packets.Packet;
+import de.speedcube.ocsUtilities.packets.PacketLoginSuccess;
 
-public class OCSClient extends JFrame {
-
-	private static final long serialVersionUID = 1L;
+public class OCSClient {
 
 	public static final String version = "0.85.1";
 	public Client client;
-	public PacketLoginSuccess userInfo = null;
+	OCSWindow window;
+
 	public boolean disconnected = false;
 
 	public Object receiveNotify;
 
-	public UserList userList;
+	public static PacketLoginSuccess userInfo = null;
+	public static UserList userList;
 
-	public GuiPanelChat chatPanel;
-	public GuiPanelLogin loginPanel;
-	public GuiPanelUserlist userlistPanel;
-	public GuiPanelTimer timerPanel;
-	public GuiPanelChatContainer chatPanelContainer;
-	public GuiPanelPartyContainer partyContainer;
-
-	public GuiTabContainer tabContainer;
+	public PacketHandlerDefault packetHandlerDefault;
+	public PacketHandlerLogin packetHandlerLogin;
+	public PacketHandlerChat packetHandlerChat;
+	public PacketHandlerParty packetHandlerParty;
 
 	public OCSClient(String adress) {
 		receiveNotify = new Object();
-
 		client = new Client();
-
 		userList = new UserList();
-		setupWindow();
 
-		loginPanel.enableButtons(false);
-		loginPanel.setAlertText(SystemStrings.getString("system.connecting"));
+		window = new OCSWindow();
+		window.setupWindow(version);
+		initListeners();
+
+		window.loginTab.enableButtons(false);
+		window.loginTab.setAlertText(SystemStrings.getString("system.connecting"));
 		client.connect(adress, 34543, receiveNotify);
 
 		if (client.connected) {
-			loginPanel.setAlertText(SystemStrings.getString("system.connected"));
-			loginPanel.enableButtons(true);
+			window.loginTab.setAlertText(SystemStrings.getString("system.connected"));
+			window.loginTab.enableButtons(true);
 		} else {
-			loginPanel.setAlertText(SystemStrings.getString("system.connection_failed"));
+			window.loginTab.setAlertText(SystemStrings.getString("system.connection_failed"));
 			return;
 		}
 
 		boolean running = true;
 
+		packetHandlerDefault = new PacketHandlerDefault(client, this, window);
+		packetHandlerLogin = new PacketHandlerLogin(client, window.loginTab, window.tabContainer);
+		packetHandlerChat = new PacketHandlerChat(client, window.chatTab.chatPanel);
+		packetHandlerParty = new PacketHandlerParty(client, window.chatTab.partyContainer);
+
 		while (running) {
-			ArrayList<Packet> packets;
-			packets = client.getData(0);
 
-			if (packets.size() == 0) {
-
+			if (!client.isDataAvailable()) {
 				synchronized (receiveNotify) {
 					try {
 						receiveNotify.wait();
@@ -68,80 +61,25 @@ public class OCSClient extends JFrame {
 						e.printStackTrace();
 					}
 				}
-
-				packets = client.getData(Packet.DEFAULT_CHANNEL);
 			}
 
-			for (Packet p : packets) {
-				if (p instanceof PacketSalt) {
-					PacketLogin passwordPacket = new PacketLogin();
-					passwordPacket.password = loginPanel.getPassword();
-					passwordPacket.salt = ((PacketSalt) p).salt;
-					client.sendPacket(passwordPacket);
-				} else if (p instanceof PacketLoginSuccess) {
-					userInfo = (PacketLoginSuccess) p;
-					tabContainer.enableTabs();
-				} else if (p instanceof PacketUserlist) {
-					userlistPanel.updateUserlist((PacketUserlist) p);
-				} else if (p instanceof PacketUserInfo) {
-					userList.addUsers((PacketUserInfo) p);
-					userlistPanel.updateUserlist();
-					chatPanel.updateChatAreasContent();
-				} else if (p instanceof PacketDisconnect) {
-					loginPanel.setAlertText(((PacketDisconnect) p).msg);
-					disconnected = true;
-				}
-			}
-
-			loginPanel.processPackets();
-			chatPanel.processPackets();
-			partyContainer.processPackets();
+			packetHandlerDefault.handlePackets(Packet.DEFAULT_CHANNEL);
+			packetHandlerLogin.handlePackets(Packet.LOGIN_PAGE_CHANNEL);
+			packetHandlerChat.handlePackets(Packet.CHAT_CHANNEL);
+			packetHandlerParty.handlePackets(Packet.PARTY_CHANNEL);
 
 			if (!client.connected) {
-				tabContainer.disableTabs();
-				loginPanel.enableButtons(false);
-				if (!disconnected) loginPanel.setAlertText(SystemStrings.getString("system.connection_lost"));
+				window.tabContainer.disableTabs();
+				window.loginTab.enableButtons(false);
+				if (!disconnected) window.loginTab.setAlertText(SystemStrings.getString("system.connection_lost"));
 			}
 		}
 	}
 
-	private void setupStyle() {
-
-		try {
-			SynthLookAndFeel laf = new SynthLookAndFeel();
-			laf.load(getClass().getResourceAsStream("/laf.xml"), getClass());
-			UIManager.setLookAndFeel(laf);
-		} catch (ParseException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setupWindow() {
-		setTitle(SystemStrings.getString("system.title", new String[] { version }));
-
-		setupStyle();
-
-		setSize(820, 600);
-
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		setVisible(true);
-
-		loginPanel = new GuiPanelLogin(client, this);
-		userlistPanel = new GuiPanelUserlist(client, this);
-		chatPanel = new GuiPanelChat(client, this);
-		timerPanel = new GuiPanelTimer(client, this);
-		partyContainer = new GuiPanelPartyContainer(client, this);
-
-		chatPanelContainer = new GuiPanelChatContainer(this, chatPanel, userlistPanel, partyContainer);
-
-		tabContainer = new GuiTabContainer(this, loginPanel, chatPanelContainer);
-
-		add(tabContainer);
-
-		validate();
-		repaint();
+	private void initListeners() {
+		window.loginTab.loginButton.addActionListener(new LoginButtonListener(client, window.loginTab.usernameFieldLogin, window.loginTab.passwordFieldLogin, false));
+		window.loginTab.registerButton.addActionListener(new LoginButtonListener(client, window.loginTab.usernameFieldRegister, window.loginTab.passwordFieldRegister, true));
+		window.chatTab.setLinkListener(new OCSLinkListener(client));
 	}
 
 	public static void main(String[] args) {

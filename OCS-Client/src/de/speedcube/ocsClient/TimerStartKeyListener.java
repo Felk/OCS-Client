@@ -3,17 +3,15 @@ package de.speedcube.ocsClient;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import de.speedcube.ocsClient.network.Client;
+import de.speedcube.ocsClient.gui.GuiPanelTimer;
 
 public class TimerStartKeyListener implements KeyListener {
 
-	private Client client;
 	private GuiPanelTimer timerGui;
 	private TimerUpdateThread timerUpdateThread;
 	private boolean startNext;
 
-	public TimerStartKeyListener(Client client, GuiPanelTimer timerGui) {
-		this.client = client;
+	public TimerStartKeyListener(GuiPanelTimer timerGui) {
 		this.timerGui = timerGui;
 	}
 

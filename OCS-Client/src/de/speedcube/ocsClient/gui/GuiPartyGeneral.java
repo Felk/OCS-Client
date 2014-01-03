@@ -1,14 +1,11 @@
-package de.speedcube.ocsClient;
+package de.speedcube.ocsClient.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
-import de.speedcube.ocsClient.network.Client;
+import de.speedcube.ocsClient.Party;
+import de.speedcube.ocsClient.SystemStrings;
 
 public class GuiPartyGeneral extends GuiPanel {
 
@@ -18,7 +15,7 @@ public class GuiPartyGeneral extends GuiPanel {
 	public JScrollPane partiesContainer;
 	public JButton createPartyButton;
 
-	public GuiPartyGeneral(Client client, GuiPanelPartyContainer guiPartyContainer) {
+	public GuiPartyGeneral(GuiPanelPartyContainer guiPartyContainer) {
 		this.guiPartyContainer = guiPartyContainer;
 
 		setLayout(null);
@@ -32,14 +29,6 @@ public class GuiPartyGeneral extends GuiPanel {
 		createPartyButton.setText(SystemStrings.getString("system.label.party.create"));
 		createPartyButton.setBounds(0, 0, 100, 30);
 
-		createPartyButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				openCreatePartyGui();
-			}
-		});
-
 		add(createPartyButton);
 
 		JLabel testlabel = new JLabel("test");
@@ -48,14 +37,6 @@ public class GuiPartyGeneral extends GuiPanel {
 		add(partiesContainer);
 
 		validate();
-	}
-
-	public void openCreatePartyGui() {
-		guiPartyContainer.remove(this);
-		guiPartyContainer.add(guiPartyContainer.createPartyGui);
-
-		guiPartyContainer.validate();
-		guiPartyContainer.repaint();
 	}
 
 	public void updatePartyDisplay(int[] partyIDs, HashMap<Integer, Party> parties) {
@@ -69,7 +50,7 @@ public class GuiPartyGeneral extends GuiPanel {
 
 				tempParty.joinButton.setBounds(0, i * 20, 20, 20);
 				//if (tempParty.isOpen()) {
-					partiesContainer.add(tempParty.joinButton);
+				partiesContainer.add(tempParty.joinButton);
 				//}
 			}
 		}

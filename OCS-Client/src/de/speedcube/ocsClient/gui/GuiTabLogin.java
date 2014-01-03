@@ -1,29 +1,21 @@
-package de.speedcube.ocsClient;
+package de.speedcube.ocsClient.gui;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 
+import de.speedcube.ocsClient.SystemStrings;
 import de.speedcube.ocsClient.network.Client;
-import de.speedcube.ocsUtilities.packets.Packet;
-import de.speedcube.ocsUtilities.packets.PacketLoginError;
-import de.speedcube.ocsUtilities.packets.PacketLogout;
-import de.speedcube.ocsUtilities.packets.PacketRegistrationError;
-import de.speedcube.ocsUtilities.packets.PacketRegistrationSuccess;
+import de.speedcube.ocsUtilities.packets.*;
 
-public class GuiPanelLogin extends GuiPanel {
+public class GuiTabLogin extends GuiPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public JLabel alertLabel;
 	private Client client;
-	private OCSClient window;
+	private OCSWindow window;
 
 	public JTextField usernameFieldLogin;
 	public JPasswordField passwordFieldLogin;
@@ -33,8 +25,7 @@ public class GuiPanelLogin extends GuiPanel {
 	public JPasswordField passwordFieldRegister;
 	public JButton registerButton;
 
-	public GuiPanelLogin(Client client, OCSClient window) {
-		this.client = client;
+	public GuiTabLogin(OCSWindow window) {
 		this.window = window;
 
 		SpringLayout layout = new SpringLayout();
@@ -59,8 +50,8 @@ public class GuiPanelLogin extends GuiPanel {
 		setComponentSize(loginButton);
 		loginButton.setText(SystemStrings.getString("system.label.login"));
 		loginButton.setName("DefButton");
-		LoginButtonListener loginButtonListener = new LoginButtonListener(client, usernameFieldLogin, passwordFieldLogin, false);
-		loginButton.addActionListener(loginButtonListener);
+		//LoginButtonListener loginButtonListener = new LoginButtonListener(client, usernameFieldLogin, passwordFieldLogin, false);
+		//loginButton.addActionListener(loginButtonListener);
 
 		//registration
 
@@ -76,8 +67,8 @@ public class GuiPanelLogin extends GuiPanel {
 		setComponentSize(registerButton);
 		registerButton.setText(SystemStrings.getString("system.label.register"));
 		registerButton.setName("DefButton");
-		LoginButtonListener registerButtonListener = new LoginButtonListener(client, usernameFieldRegister, passwordFieldRegister, true);
-		registerButton.addActionListener(registerButtonListener);
+		//LoginButtonListener registerButtonListener = new LoginButtonListener(client, usernameFieldRegister, passwordFieldRegister, true);
+		//registerButton.addActionListener(registerButtonListener);
 
 		//layout
 
@@ -135,13 +126,13 @@ public class GuiPanelLogin extends GuiPanel {
 				setAlertText(SystemStrings.getString(((PacketLoginError) p).msg));
 			} else if (p instanceof PacketLogout) {
 				window.tabContainer.disableTabs();
-				window.loginPanel.setAlertText(SystemStrings.getString(((PacketLogout) p).msg));
+				window.loginTab.setAlertText(SystemStrings.getString(((PacketLogout) p).msg));
 			} else if (p instanceof PacketRegistrationError) {
 				window.tabContainer.disableTabs();
-				window.loginPanel.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
+				window.loginTab.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
 			} else if (p instanceof PacketRegistrationSuccess) {
 				//window.tabContainer.disableTabs();
-				window.loginPanel.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
+				window.loginTab.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
 			}
 		}
 	}

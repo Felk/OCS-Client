@@ -1,11 +1,9 @@
 package de.speedcube.ocsClient;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 
 public class AudioFile {
 

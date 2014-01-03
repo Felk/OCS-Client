@@ -1,26 +1,20 @@
-package de.speedcube.ocsClient;
+package de.speedcube.ocsClient.gui;
 
 import java.awt.Color;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
-import de.speedcube.ocsClient.network.Client;
+import de.speedcube.ocsClient.TimerStartKeyListener;
 
 public class GuiPanelTimer extends GuiPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private Client client;
 	public JLabel timerLabel;
 
-	public GuiPanelTimer(Client client, OCSClient window) {
-		this.client = client;
-
+	public GuiPanelTimer(OCSWindow window) {
 		setLayout(null);
 		setBounds(0, 450, 300, 100);
 
@@ -28,7 +22,7 @@ public class GuiPanelTimer extends GuiPanel {
 		timerLabel.setBounds(0, 0, 300, 100);
 		setText("00:00,00");
 
-		addKeyListener(new TimerStartKeyListener(client, this));
+		addKeyListener(new TimerStartKeyListener( this));
 		setFocusable(true);
 		setBorder(new LineBorder(Color.red));
 

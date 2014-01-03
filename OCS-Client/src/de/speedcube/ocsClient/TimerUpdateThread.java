@@ -1,5 +1,7 @@
 package de.speedcube.ocsClient;
 
+import de.speedcube.ocsClient.gui.GuiPanelTimer;
+
 public class TimerUpdateThread extends Thread {
 
 	private GuiPanelTimer timerGui;

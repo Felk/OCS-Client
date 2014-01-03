@@ -1,7 +1,6 @@
 package de.speedcube.ocsClient.chat;
 
-import de.speedcube.ocsClient.GuiPanel;
-import de.speedcube.ocsClient.UserList;
+import de.speedcube.ocsClient.gui.GuiPanel;
 
 public class SystemMessage extends Message {
 
@@ -10,7 +9,7 @@ public class SystemMessage extends Message {
 	}
 
 	@Override
-	public String toString(UserList userlist) {
+	public String toString() {
 		return ("<span class ='time'>" + timestampToString(timestamp) + "</span>  <span class ='system'>" + GuiPanel.setLinks(GuiPanel.escapeHTML(message)) + "</span>");
 	}
 }
