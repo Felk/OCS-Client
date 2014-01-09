@@ -28,8 +28,6 @@ public class GuiTabContainer extends GuiPanel {
 		tabbedPane.addTab(SystemStrings.getString("system.tab.login"), loginPanel);
 
 		add(tabbedPane);
-
-		
 	}
 
 	public void enableTabs() {
@@ -45,6 +43,5 @@ public class GuiTabContainer extends GuiPanel {
 		tabbedPane.remove(chatContainer);
 		tabsEnabled = false;
 	}
-
 
 }

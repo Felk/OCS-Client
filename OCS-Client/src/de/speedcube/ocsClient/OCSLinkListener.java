@@ -22,7 +22,6 @@ public class OCSLinkListener implements HyperlinkListener {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 			try {
 				int userID = getUserID(e.getDescription());
-				System.out.println(e.getDescription());
 				if (userID != -1) {
 					PacketChannelWhisper whisperPacket = new PacketChannelWhisper();
 					whisperPacket.userID = userID;

@@ -6,11 +6,13 @@ import de.speedcube.ocsUtilities.packets.*;
 
 public class PacketHandlerLogin extends PacketHandler {
 
+	private OCSClient ocsClient;
 	private GuiTabLogin loginTab;
 	private GuiTabContainer tabContainer;
 
-	public PacketHandlerLogin(Client client, GuiTabLogin loginTab, GuiTabContainer tabContainer) {
+	public PacketHandlerLogin(Client client, OCSClient ocsClient, GuiTabLogin loginTab, GuiTabContainer tabContainer) {
 		super(client);
+		this.ocsClient = ocsClient;
 		this.tabContainer = tabContainer;
 		this.loginTab = loginTab;
 		this.tabContainer = tabContainer;
@@ -26,18 +28,22 @@ public class PacketHandlerLogin extends PacketHandler {
 		} else if (p instanceof PacketLoginSuccess) {
 			OCSClient.userInfo = (PacketLoginSuccess) p;
 			tabContainer.enableTabs();
-			System.out.println("test");
 		} else if (p instanceof PacketLoginError) {
 			loginTab.setAlertText(SystemStrings.getString(((PacketLoginError) p).msg));
 		} else if (p instanceof PacketLogout) {
 			tabContainer.disableTabs();
 			loginTab.setAlertText(SystemStrings.getString(((PacketLogout) p).msg));
+			ocsClient.reset();
 		} else if (p instanceof PacketRegistrationError) {
 			tabContainer.disableTabs();
 			loginTab.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
 		} else if (p instanceof PacketRegistrationSuccess) {
-			//window.tabContainer.disableTabs();
 			loginTab.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
 		}
+	}
+
+	@Override
+	public void reset() {
+
 	}
 }

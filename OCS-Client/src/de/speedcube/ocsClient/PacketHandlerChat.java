@@ -31,6 +31,8 @@ public class PacketHandlerChat extends PacketHandler {
 
 		chatPanel.chatButton.addActionListener(chatListener);
 		chatPanel.chatField.addActionListener(chatListener);
+
+		initListeners();
 	}
 
 	@Override
@@ -57,6 +59,13 @@ public class PacketHandlerChat extends PacketHandler {
 				if (ch.name.equals(((PacketChannelEnter) p).chatChannel)) return;
 			}
 			addChatChannel((PacketChannelEnter) p);
+		} else if (p instanceof PacketChannelLeave) {
+			for (int i = 0; i < chatRooms.size(); i++) {
+				if (chatRooms.get(i).name.equals(((PacketChannelLeave) p).chatChannel)) {
+					chatRooms.remove(i);
+					chatPanel.updateChatAreasTabs(chatRooms);
+				}
+			}
 		}
 	}
 
@@ -72,14 +81,34 @@ public class PacketHandlerChat extends PacketHandler {
 		return null;
 	}
 
+	public ChatHistory getCurrentChannel() {
+		return chatRooms.get(chatPanel.chatTabs.getSelectedIndex());
+	}
+
 	public void sendChatMessage() {
 		if (!chatPanel.chatField.getText().equals("")) {
 			PacketChat chatPacket = new PacketChat();
 			chatPacket.text = chatPanel.chatField.getText();
-			chatPacket.chatChannel = chatRooms.get(chatPanel.chatTabs.getSelectedIndex()).name;
+			chatPacket.chatChannel = getCurrentChannel().name;
 
 			chatPanel.chatField.setText("");
 			client.sendPacket(chatPacket);
 		}
+	}
+
+	private void initListeners() {
+		chatPanel.leaveChannelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PacketChannelLeave leaveChannelPacket = new PacketChannelLeave();
+				leaveChannelPacket.chatChannel = getCurrentChannel().name;
+				client.sendPacket(leaveChannelPacket);
+			}
+		});
+	}
+
+	@Override
+	public void reset() {
+		chatRooms.clear();
 	}
 }

@@ -23,7 +23,8 @@ public abstract class GuiPanel extends JPanel {
 				}
 			}
 		}
-		style.addRule(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;} .system{color: #ff7f00;} a{color: #3399FF !important; text-decoration: none !important; } .status.a{color: #3399FF !important; text-decoration: none !important; }");
+		style.addRule(".rank{color: red;} .status{color: yellow;} .time{color: #ffffff;} .system{color: #ff7f00;} .link{color: #3399FF;}");
+		//a{color: #3399FF !important; text-decoration: none !important; } .status.a{color: #3399FF !important; text-decoration: none !important}; 
 	}
 
 	public static StyleSheet getTextAreaStyle() {
@@ -36,6 +37,19 @@ public abstract class GuiPanel extends JPanel {
 
 	public static String setLinks(String text) {
 		String tlds = "de|com|info|net|at|org|ch|gov|us|to|cz";
-		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <a href=http://$2>$2</a> ");
+		return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <span class='link'><a href=http://$2>$2</a></span> ");
+		//return text.replaceAll("\\s?(http://|https://)?(\\S+\\.(" + tlds + ")(/\\S*|/?))\\b", " <a href=http://$2>$2</a> ");
+	}
+
+	public static String convertTimeToString(long timeDelta) {
+		int timeInMillis = (int) (timeDelta / 1000000);
+		int seconds = timeInMillis / 1000;
+		int millis = timeInMillis % 1000;
+
+		int minutes = seconds / 60;
+		int temp1 = millis / 10;
+		seconds %= 60;
+
+		return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + "," + (temp1 < 10 ? "0" + temp1 : temp1);
 	}
 }

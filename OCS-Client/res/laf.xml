@@ -13,11 +13,29 @@
 	</style>
 	<bind style="ocsStylePanel" type="region" key="Panel" />
 
+	<style id="ocsStyleTooltip">
+
+		<insets top="3" left="3" right="3" bottom="3" />
+		<state>
+			<font name="Arial" size="12" />
+			<imagePainter method="toolTipBackground" path="/Button.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="ocsStyleTooltip" type="region" key="ToolTip" />
+
 	<style id="ocsStyleButton">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state>
 			<color value="#ffffff" type="FOREGROUND" />
 			<imagePainter method="buttonBackground" path="/Button.png" sourceInsets="10 10 10 10" />
+		</state>
+
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground" path="/ButtonDisabled.png" sourceInsets="10 10 10 10" />
+		</state>
+
+		<state value="SELECTED">
+			<imagePainter method="buttonBackground" path="/ButtonSelected.png" sourceInsets="10 10 10 10" />
 		</state>
 
 		<state value="PRESSED">
@@ -53,9 +71,9 @@
 		</state>
 	</style>
 	<bind style="ocsStyleCheckbox" type="region" key="Checkbox" />
-	
-	
-	
+
+
+
 	<!-- tab container -->
 
 	<synth>
@@ -93,6 +111,10 @@
 			<imagePainter method="buttonBackground" path="/ChatButton.png" sourceInsets="10 10 10 10" />
 		</state>
 
+		<state value="SELECTED">
+			<imagePainter method="buttonBackground" path="/ChatButtonSelected.png" sourceInsets="10 10 10 10" />
+		</state>
+
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground" path="/ChatButtonPressed.png" sourceInsets="10 10 10 10" />
 		</state>
@@ -108,19 +130,29 @@
 	</style>
 	<bind style="ocsStyleChatTextfield" type="name" key="ChatTextfield" />
 
-	<synth>
-		<style id="ocsStyleChatTab">
-			<opaque value="TRUE" />
-			<state>
-				<imagePainter method="TabbedPaneTabBackground" path="/ChatTab.png" sourceInsets="5 5 5 5" />
-			</state>
-			<state value="SELECTED">
-				<imagePainter method="TabbedPaneTabBackground" path="/ChatTabSelected.png" sourceInsets="5 5 5 5" />
-			</state>
-		</style>
-		<bind style="ocsStyleChatTab" type="name" key="ChatChannelTabs" />
+	<style id="ocsStyleChatTab">
+		<opaque value="TRUE" />
+		<state>
+			<imagePainter method="TabbedPaneTabBackground" path="/ChatTab.png" sourceInsets="5 5 5 5" />
+		</state>
+		<state value="SELECTED">
+			<imagePainter method="TabbedPaneTabBackground" path="/ChatTabSelected.png" sourceInsets="5 5 5 5" />
+		</state>
+	</style>
+	<bind style="ocsStyleChatTab" type="name" key="ChatChannelTabs" />
 
-	</synth>
+	<style id="ocsStyleChannelLeaveButton">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<color value="#ffffff" type="FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/CheckBox_off.png" sourceInsets="8 8 8 8" />
+		</state>
+
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground" path="/CheckBox_on.png" sourceInsets="8 8 8 8" />
+		</state>
+	</style>
+	<bind style="ocsStyleChannelLeaveButton" type="name" key="ChannelLeaveButton" />
 
 
 

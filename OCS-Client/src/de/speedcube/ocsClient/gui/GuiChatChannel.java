@@ -18,9 +18,6 @@ public class GuiChatChannel {
 
 	public GuiChatChannel(OCSLinkListener linkListener) {
 		chatArea = new JEditorPane();
-
-		chatArea = new JEditorPane();
-		chatArea.setBounds(0, 0, 400, 400);
 		chatArea.setEditable(false);
 		htmlEditor = new HTMLEditorKit();
 		chatArea.setEditorKit(htmlEditor);

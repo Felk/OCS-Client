@@ -7,7 +7,7 @@ import de.speedcube.ocsUtilities.packets.PacketLoginSuccess;
 
 public class OCSClient {
 
-	public static final String version = "0.85.1";
+	public static final String version = "0.86";
 	public Client client;
 	OCSWindow window;
 
@@ -47,7 +47,7 @@ public class OCSClient {
 		boolean running = true;
 
 		packetHandlerDefault = new PacketHandlerDefault(client, this, window);
-		packetHandlerLogin = new PacketHandlerLogin(client, window.loginTab, window.tabContainer);
+		packetHandlerLogin = new PacketHandlerLogin(client, this, window.loginTab, window.tabContainer);
 		packetHandlerChat = new PacketHandlerChat(client, window.chatTab.chatPanel);
 		packetHandlerParty = new PacketHandlerParty(client, window.chatTab.partyContainer);
 
@@ -80,6 +80,14 @@ public class OCSClient {
 		window.loginTab.loginButton.addActionListener(new LoginButtonListener(client, window.loginTab.usernameFieldLogin, window.loginTab.passwordFieldLogin, false));
 		window.loginTab.registerButton.addActionListener(new LoginButtonListener(client, window.loginTab.usernameFieldRegister, window.loginTab.passwordFieldRegister, true));
 		window.chatTab.setLinkListener(new OCSLinkListener(client));
+	}
+
+	public void reset() {
+		window.tabContainer.chatContainer.reset();
+		packetHandlerDefault.reset();
+		packetHandlerLogin.reset();
+		packetHandlerChat.reset();
+		packetHandlerParty.reset();
 	}
 
 	public static void main(String[] args) {

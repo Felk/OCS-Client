@@ -22,9 +22,15 @@ public class GuiTabChat extends GuiPanel {
 		//setBackground(Color.decode("#444444"));
 		add(chatPanel);
 		add(userlistPanel);
-		add(partyContainer);
+		//add(partyContainer);
 
 		setBounds(0, 0, window.getWidth(), window.getHeight());
+	}
+
+	public void reset() {
+		chatPanel.reset();
+		userlistPanel.reset();
+		partyContainer.reset();
 	}
 
 	public void setLinkListener(OCSLinkListener linkListener) {

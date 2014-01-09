@@ -3,23 +3,26 @@ package de.speedcube.ocsClient;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import de.speedcube.ocsClient.gui.GuiPanelTimer;
+import de.speedcube.ocsClient.gui.GuiPartyTimer;
 
 public class TimerStartKeyListener implements KeyListener {
 
-	private GuiPanelTimer timerGui;
+	private GuiPartyTimer timerGui;
+	private PacketHandlerParty partyPacketHandler;
 	private TimerUpdateThread timerUpdateThread;
 	private boolean startNext;
 
-	public TimerStartKeyListener(GuiPanelTimer timerGui) {
+	public TimerStartKeyListener(GuiPartyTimer timerGui, PacketHandlerParty partyPacketHandler) {
 		this.timerGui = timerGui;
+		this.partyPacketHandler = partyPacketHandler;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			if (timerUpdateThread != null) {
-				timerUpdateThread.stopTimer();
+				long endTime = timerUpdateThread.stopTimer();
+				partyPacketHandler.setTimerStopped(endTime);
 				timerUpdateThread = null;
 				startNext = false;
 			} else {

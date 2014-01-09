@@ -64,10 +64,13 @@ public class GuiPanelUserlist extends GuiPanel {
 			userlist.setText(textBuffer.toString());
 			((DefaultCaret) userlist.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
-
 	}
 
 	public void updateUserlist() {
 		updateUserlist(userlistPacket);
+	}
+
+	public void reset() {
+		userlistPacket = null;
 	}
 }

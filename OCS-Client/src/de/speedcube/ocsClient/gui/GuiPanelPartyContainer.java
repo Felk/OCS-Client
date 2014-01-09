@@ -7,6 +7,7 @@ public class GuiPanelPartyContainer extends GuiPanel {
 	public GuiPartyGeneral generalPartyGui;
 	public GuiPartyCreate createPartyGui;
 	public GuiParty partyGui;
+	public GuiPartyTimer timerGui;
 
 	public OCSWindow window;
 
@@ -19,6 +20,7 @@ public class GuiPanelPartyContainer extends GuiPanel {
 		generalPartyGui = new GuiPartyGeneral(this);
 		createPartyGui = new GuiPartyCreate();
 		partyGui = new GuiParty(this);
+		timerGui = new GuiPartyTimer(window);
 
 		add(generalPartyGui);
 
@@ -47,5 +49,17 @@ public class GuiPanelPartyContainer extends GuiPanel {
 
 		validate();
 		repaint();
+	}
+
+	public void openTimerGui() {
+		removeAll();
+		add(timerGui);
+
+		validate();
+		repaint();
+	}
+
+	public void reset() {
+
 	}
 }

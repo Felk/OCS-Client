@@ -23,4 +23,6 @@ public abstract class PacketHandler {
 			processPacket(p);
 		}
 	}
+
+	public abstract void reset();
 }

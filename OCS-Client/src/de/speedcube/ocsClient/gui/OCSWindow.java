@@ -30,6 +30,8 @@ public class OCSWindow extends JFrame {
 	public void setupWindow(String version) {
 		setTitle(SystemStrings.getString("system.title", new String[] { version }));
 
+		ToolTipManager.sharedInstance().setDismissDelay(60000);
+
 		setupStyle();
 
 		setSize(820, 600);

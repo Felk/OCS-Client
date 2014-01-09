@@ -1,20 +1,16 @@
 package de.speedcube.ocsClient.gui;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
 import de.speedcube.ocsClient.SystemStrings;
-import de.speedcube.ocsClient.network.Client;
-import de.speedcube.ocsUtilities.packets.*;
 
 public class GuiTabLogin extends GuiPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public JLabel alertLabel;
-	private Client client;
 	private OCSWindow window;
 
 	public JTextField usernameFieldLogin;
@@ -116,25 +112,6 @@ public class GuiTabLogin extends GuiPanel {
 
 	public void setAlertText(String text) {
 		alertLabel.setText(text);
-	}
-
-	public void processPackets() {
-		ArrayList<Packet> packets = client.getData(Packet.LOGIN_PAGE_CHANNEL);
-
-		for (Packet p : packets) {
-			if (p instanceof PacketLoginError) {
-				setAlertText(SystemStrings.getString(((PacketLoginError) p).msg));
-			} else if (p instanceof PacketLogout) {
-				window.tabContainer.disableTabs();
-				window.loginTab.setAlertText(SystemStrings.getString(((PacketLogout) p).msg));
-			} else if (p instanceof PacketRegistrationError) {
-				window.tabContainer.disableTabs();
-				window.loginTab.setAlertText(SystemStrings.getString(((PacketRegistrationError) p).err));
-			} else if (p instanceof PacketRegistrationSuccess) {
-				//window.tabContainer.disableTabs();
-				window.loginTab.setAlertText(SystemStrings.getString("reg.success", new String[] { ((PacketRegistrationSuccess) p).username }));
-			}
-		}
 	}
 
 	public void enableButtons(boolean enable) {

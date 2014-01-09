@@ -21,17 +21,19 @@ public class Party {
 	public int id;
 	public int rounds_num;
 	public int rounds_counting;
+	public int round;
 	public String name;
 	public PartyResultSet[] results;
 
 	private Client client;
 
-	public Party(int id, int ownerID, byte type, int rounds, int counting, String name, PartyResultSet[] results, int state, UserList userlist, Client client) {
+	public Party(int id, int ownerID, byte type, int rounds, int counting, int round, String name, PartyResultSet[] results, int state, UserList userlist, Client client) {
 		this.id = id;
 		this.ownerID = ownerID;
 		this.type = type;
 		this.rounds_num = rounds;
 		this.rounds_counting = counting;
+		this.round = round;
 		this.name = name;
 		this.results = results;
 		this.state = state;
